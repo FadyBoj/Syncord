@@ -1,0 +1,6 @@
+@Syncord_HostAddress = http://localhost:5196
+
+GET {{Syncord_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
