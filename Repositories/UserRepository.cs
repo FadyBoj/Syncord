@@ -36,11 +36,10 @@ public class UserRepository : IUserRepository
             Email = user.Email,
             Firstname = user.Firstname,
             Lastname = user.Lastname,
-            PasswordHash = user.Password,
             UserName = user.Email
         };
 
-        var result = await _userManager.CreateAsync(newUser);
+        var result = await _userManager.CreateAsync(newUser,user.Password);
 
         return result;
     }

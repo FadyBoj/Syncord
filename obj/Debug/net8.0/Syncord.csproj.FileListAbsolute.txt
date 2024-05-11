@@ -131,3 +131,11 @@ C:\PC\Projects\Syncord\bin\Debug\net8.0\runtimes\win\lib\netcoreapp3.0\System.Dr
 C:\PC\Projects\Syncord\bin\Debug\net8.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\PC\Projects\Syncord\bin\Debug\net8.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 C:\PC\Projects\Syncord\obj\Debug\net8.0\Syncord.sourcelink.json
+C:\PC\Projects\Syncord\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\PC\Projects\Syncord\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\PC\Projects\Syncord\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\PC\Projects\Syncord\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\PC\Projects\Syncord\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\PC\Projects\Syncord\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\PC\Projects\Syncord\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\PC\Projects\Syncord\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
