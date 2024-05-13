@@ -139,3 +139,5 @@ C:\PC\Projects\Syncord\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
 C:\PC\Projects\Syncord\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\PC\Projects\Syncord\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\PC\Projects\Syncord\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\PC\Projects\Syncord\bin\Debug\net8.0\libman.json
+C:\PC\Projects\Syncord\bin\Debug\net8.0\Syncord.staticwebassets.runtime.json

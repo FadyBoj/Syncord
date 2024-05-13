@@ -6,6 +6,7 @@ using Syncord.Models;
 using Syncord.Repositories;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Syncord.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +59,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //Add scopped services
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+
+//Configure real time 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 //Configure db context
@@ -75,5 +80,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<MsgHub>("/chat");
 
 app.Run();

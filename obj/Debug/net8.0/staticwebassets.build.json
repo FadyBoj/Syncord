@@ -1,11 +1,39 @@
 {
   "Version": 1,
-  "Hash": "wYTXuS5UzFrBj0VNq7hIJhERv9mqVP5S3ctDGtr5YKs=",
+  "Hash": "guS3YXFrNcHHKuwSdYT95VWFRFaWfsSib4o/6MRPQ+Q=",
   "Source": "Syncord",
   "BasePath": "_content/Syncord",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "Syncord\\wwwroot",
+      "Source": "Syncord",
+      "ContentRoot": "C:\\PC\\Projects\\Syncord\\wwwroot\\",
+      "BasePath": "_content/Syncord",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\PC\\Projects\\Syncord\\wwwroot\\js\\signalr\\dist\\browser\\signalr.js",
+      "SourceId": "Syncord",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\PC\\Projects\\Syncord\\wwwroot\\",
+      "BasePath": "_content/Syncord",
+      "RelativePath": "js/signalr/dist/browser/signalr.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\signalr\\dist\\browser\\signalr.js"
+    }
+  ]
 }

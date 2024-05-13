@@ -83,6 +83,13 @@ namespace Syncord.Controllers
             return Ok(new { token = token });
         }
 
+        [HttpGet]
+        [Route("Data")]
+
+        public  string GetData()
+        {
+            return "This is some data";
+        } 
       
     }
 }
