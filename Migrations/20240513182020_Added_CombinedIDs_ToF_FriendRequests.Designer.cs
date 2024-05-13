@@ -10,9 +10,9 @@ using Syncord.Data;
 
 namespace Syncord.Migrations
 {
-    [DbContext(typeof(IdentityContext))]
-    [Migration("20240513020504_Removes_isOnline_Column")]
-    partial class Removes_isOnline_Column
+    [DbContext(typeof(SyncordContext))]
+    [Migration("20240513182020_Added_CombinedIDs_ToF_FriendRequests")]
+    partial class Added_CombinedIDs_ToF_FriendRequests
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -150,6 +150,29 @@ namespace Syncord.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Syncord.Models.FriendRequest", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("RecieverId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("SenderId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecieverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("friendRequests");
+                });
+
             modelBuilder.Entity("Syncord.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -173,6 +196,9 @@ namespace Syncord.Migrations
                     b.Property<string>("Firstname")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("IsOnline")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Lastname")
                         .IsRequired()
@@ -276,6 +302,32 @@ namespace Syncord.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Syncord.Models.FriendRequest", b =>
+                {
+                    b.HasOne("Syncord.Models.User", "Reciever")
+                        .WithMany("RecievedFriendRequests")
+                        .HasForeignKey("RecieverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Syncord.Models.User", "Sender")
+                        .WithMany("SentFriendRequests")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Reciever");
+
+                    b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("Syncord.Models.User", b =>
+                {
+                    b.Navigation("RecievedFriendRequests");
+
+                    b.Navigation("SentFriendRequests");
                 });
 #pragma warning restore 612, 618
         }

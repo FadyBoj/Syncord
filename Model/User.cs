@@ -20,5 +20,9 @@ public class User : IdentityUser
     [Required, MinLength(8)]
     public override string? PasswordHash { get; set; }
 
-    public bool IsOnline {get;set;} = false;
+    public bool IsOnline { get; set; } = false;
+
+    public ICollection<FriendRequest> SentFriendRequests { get; } = new List<FriendRequest>();
+    public ICollection<FriendRequest> RecievedFriendRequests { get; } = new List<FriendRequest>();
+
 }

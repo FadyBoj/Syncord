@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Syncord")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+10adceb9848164b3fa8713d8278fac31225a5540")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b7df5b34646604bed3016a75adbb79544dde51f9")]
 [assembly: System.Reflection.AssemblyProductAttribute("Syncord")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Syncord")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

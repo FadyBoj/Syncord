@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Syncord.Data;
 
@@ -10,12 +9,10 @@ using Syncord.Data;
 
 namespace Syncord.Migrations
 {
-    [DbContext(typeof(IdentityContext))]
-    [Migration("20240511170723_Initial")]
-    partial class Initial
+    [DbContext(typeof(SyncordContext))]
+    partial class SyncordContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,6 +147,36 @@ namespace Syncord.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Syncord.Models.FriendRequest", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CombinedIds")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("RecieverId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("SenderId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CombinedIds")
+                        .IsUnique();
+
+                    b.HasIndex("RecieverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("friendRequests");
+                });
+
             modelBuilder.Entity("Syncord.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -173,6 +200,9 @@ namespace Syncord.Migrations
                     b.Property<string>("Firstname")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("IsOnline")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Lastname")
                         .IsRequired()
@@ -276,6 +306,32 @@ namespace Syncord.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Syncord.Models.FriendRequest", b =>
+                {
+                    b.HasOne("Syncord.Models.User", "Reciever")
+                        .WithMany("RecievedFriendRequests")
+                        .HasForeignKey("RecieverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Syncord.Models.User", "Sender")
+                        .WithMany("SentFriendRequests")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Reciever");
+
+                    b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("Syncord.Models.User", b =>
+                {
+                    b.Navigation("RecievedFriendRequests");
+
+                    b.Navigation("SentFriendRequests");
                 });
 #pragma warning restore 612, 618
         }

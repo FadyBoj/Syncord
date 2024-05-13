@@ -39,6 +39,7 @@ namespace Syncord.Migrations
                     Firstname = table.Column<string>(type: "longtext", nullable: false),
                     Lastname = table.Column<string>(type: "longtext", nullable: false),
                     PasswordHash = table.Column<string>(type: "longtext", nullable: false),
+                    IsOnline = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
@@ -169,6 +170,33 @@ namespace Syncord.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "friendRequests",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    SenderId = table.Column<string>(type: "varchar(255)", nullable: false),
+                    RecieverId = table.Column<string>(type: "varchar(255)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_friendRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_friendRequests_AspNetUsers_RecieverId",
+                        column: x => x.RecieverId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_friendRequests_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -211,6 +239,16 @@ namespace Syncord.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_friendRequests_RecieverId",
+                table: "friendRequests",
+                column: "RecieverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_friendRequests_SenderId",
+                table: "friendRequests",
+                column: "SenderId");
         }
 
         /// <inheritdoc />
@@ -230,6 +268,9 @@ namespace Syncord.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "friendRequests");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

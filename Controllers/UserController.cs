@@ -18,14 +18,17 @@ namespace Syncord.Controllers
         private readonly IUserRepository _userRepository;
         private readonly SignInManager<User> _signinManager;
         private readonly IConfiguration _config;
+        private readonly UserManager<User> _userManager;
+
 
 
         public UserController(IUserRepository userRepository, SignInManager<User> signinManager,
-        IConfiguration config)
+        IConfiguration config, UserManager<User> userManager)
         {
             _userRepository = userRepository;
             _signinManager = signinManager;
             _config = config;
+            _userManager = userManager;
         }
 
         [HttpPost]
@@ -84,12 +87,14 @@ namespace Syncord.Controllers
         }
 
         [HttpGet]
-        [Route("Data")]
-
-        public  string GetData()
+        [Route("requests")]
+        [Authorize]
+        public  async Task<ActionResult> GetData()
         {
-            return "This is some data";
-        } 
-      
+            var userId = HttpContext.User.FindFirst("Id")?.Value;
+            var requests = await _userRepository.GetRequests(userId);
+            return Ok(new{requests= requests});
+        }
+
     }
 }

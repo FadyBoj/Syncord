@@ -14,14 +14,16 @@ public interface IUserRepository
     Task AddOnline(string id);
     Task RemoveOnline(string id);
 
+    Task<ICollection<GetRequestVm>> GetRequests(string id);
+
 }
 
 public class UserRepository : IUserRepository
 {
-    private readonly IdentityContext _context;
+    private readonly SyncordContext _context;
     private readonly UserManager<User> _userManager;
 
-    public UserRepository(IdentityContext context, UserManager<User> userManager)
+    public UserRepository(SyncordContext context, UserManager<User> userManager)
     {
         _context = context;
         _userManager = userManager;
@@ -59,7 +61,7 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync();
     }
 
-       public async Task RemoveOnline(string id)
+    public async Task RemoveOnline(string id)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
@@ -70,4 +72,15 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync();
     }
 
+
+    public async Task<ICollection<GetRequestVm>> GetRequests(string id)
+    {
+        var user = await _context.Users.Include(u => u.SentFriendRequests).FirstOrDefaultAsync(u => u.Id == id);
+        var requests = user.SentFriendRequests.Select(f =>new GetRequestVm{
+            senderId = f.SenderId,
+            recieverId = f.RecieverId
+        }).ToList();
+
+        return requests;
+    }
 }

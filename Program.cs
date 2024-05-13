@@ -21,7 +21,15 @@ builder.Services.AddSwaggerGen();
 
 //Configure Identity DB context
 
-builder.Services.AddDbContext<IdentityContext>(options =>
+builder.Services.AddDbContext<SyncordContext>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("Default");
+
+    if (connectionString != null)
+        options.UseMySQL(connectionString);
+});
+
+builder.Services.AddDbContext<SyncordContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("Default");
 
@@ -35,7 +43,7 @@ builder.Services.AddIdentityApiEndpoints<User>(options =>
     options.Password.RequireNonAlphanumeric = false;
 })
 .AddDefaultTokenProviders()
-.AddEntityFrameworkStores<IdentityContext>();
+.AddEntityFrameworkStores<SyncordContext>();
 
 //Configure JWT
 var jwtKey = builder.Configuration["Jwt:Key"];
@@ -60,11 +68,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 //Add scopped services
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
+builder.Services.AddScoped<IFriendShipRepository,FriendShipRepository>();
 
 //Configure real time 
 builder.Services.AddSignalR();
-builder.Services.AddSingleton<IUserIdProvider,EmailBasedUserIdProvider>();
+builder.Services.AddSingleton<IUserIdProvider, EmailBasedUserIdProvider>();
 
 var app = builder.Build();
 
