@@ -10,6 +10,10 @@ public interface IUserRepository
 {
     Task<IdentityResult> AddUser(RegisterVm user);
     Task<User?> GetUserByEmail(string Email);
+
+    Task AddOnline(string id);
+    Task RemoveOnline(string id);
+
 }
 
 public class UserRepository : IUserRepository
@@ -39,9 +43,31 @@ public class UserRepository : IUserRepository
             UserName = user.Email
         };
 
-        var result = await _userManager.CreateAsync(newUser,user.Password);
+        var result = await _userManager.CreateAsync(newUser, user.Password);
 
         return result;
+    }
+
+    public async Task AddOnline(string id)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+        if (user == null)
+            return;
+
+        user.IsOnline = true;
+        await _context.SaveChangesAsync();
+    }
+
+       public async Task RemoveOnline(string id)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+        if (user == null)
+            return;
+
+        user.IsOnline = false;
+        await _context.SaveChangesAsync();
     }
 
 }

@@ -1,20 +1,48 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using Syncord.Repositories;
 
 namespace Syncord.Hubs
-{   
+{
     [Authorize]
     public class MsgHub : Hub
     {
-        public override Task OnConnectedAsync()
+        private readonly IServiceScopeFactory _serviceScopeFactory;
+
+        public MsgHub(IServiceScopeFactory serviceScopeFactory)
         {
-            Console.WriteLine("User connected");
+            _serviceScopeFactory = serviceScopeFactory;
+        }
+        public override async Task<System.Threading.Tasks.Task> OnConnectedAsync()
+        {
+            var userId = Context.User.FindFirst("Id")?.Value;
+
+            if (userId == null)
+                return base.OnConnectedAsync();
+
+
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var _userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
+                await _userRepository.AddOnline(userId);
+            }
+
             return base.OnConnectedAsync();
         }
 
-        public override Task OnDisconnectedAsync(Exception? exception)
+        public async override Task<System.Threading.Tasks.Task> OnDisconnectedAsync(Exception? exception)
         {
-            Console.WriteLine("User Disconnected");
+            var userId = Context.User.FindFirst("Id")?.Value;
+
+            if (userId == null)
+                return base.OnDisconnectedAsync(exception);
+
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var _userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
+                await _userRepository.RemoveOnline(userId);
+            }
 
             return base.OnDisconnectedAsync(exception);
         }

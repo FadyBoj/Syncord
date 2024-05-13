@@ -7,6 +7,8 @@ using Syncord.Repositories;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Syncord.Hubs;
+using Syncord.providers;
+using Microsoft.AspNetCore.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +64,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 //Configure real time 
 builder.Services.AddSignalR();
+builder.Services.AddSingleton<IUserIdProvider,EmailBasedUserIdProvider>();
 
 var app = builder.Build();
 

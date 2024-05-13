@@ -19,4 +19,6 @@ public class User : IdentityUser
 
     [Required, MinLength(8)]
     public override string? PasswordHash { get; set; }
+
+    public bool IsOnline {get;set;} = false;
 }

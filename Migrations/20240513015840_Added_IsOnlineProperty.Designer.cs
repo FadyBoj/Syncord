@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Syncord.Data;
 
@@ -10,9 +11,11 @@ using Syncord.Data;
 namespace Syncord.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20240513015840_Added_IsOnlineProperty")]
+    partial class Added_IsOnlineProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,9 +174,6 @@ namespace Syncord.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("IsOnline")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<string>("Lastname")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -211,6 +211,9 @@ namespace Syncord.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
+
+                    b.Property<bool>("isOnline")
+                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
 
