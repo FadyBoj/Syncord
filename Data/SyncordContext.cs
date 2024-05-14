@@ -18,7 +18,6 @@ public class SyncordContext : IdentityDbContext<User>
         modelBuilder.Entity<FriendRequest>()
         .HasKey(f => f.Id);
 
-
         modelBuilder.Entity<FriendRequest>()
         .HasOne(f => f.Sender)
         .WithMany(u => u.SentFriendRequests)
@@ -31,8 +30,13 @@ public class SyncordContext : IdentityDbContext<User>
         .HasForeignKey(f => f.RecieverId)
         .OnDelete(DeleteBehavior.Restrict);
 
-   
     }
+
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     base.OnConfiguring(optionsBuilder);
+    //     optionsBuilder.
+    // }
 
     public DbSet<FriendRequest> friendRequests { get; set; }
 }

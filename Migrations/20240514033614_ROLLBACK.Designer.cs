@@ -11,8 +11,8 @@ using Syncord.Data;
 namespace Syncord.Migrations
 {
     [DbContext(typeof(SyncordContext))]
-    [Migration("20240513182020_Added_CombinedIDs_ToF_FriendRequests")]
-    partial class Added_CombinedIDs_ToF_FriendRequests
+    [Migration("20240514033614_ROLLBACK")]
+    partial class ROLLBACK
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -156,6 +156,10 @@ namespace Syncord.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
+                    b.Property<string>("CombinedIds")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
                     b.Property<string>("RecieverId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
@@ -165,6 +169,9 @@ namespace Syncord.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CombinedIds")
+                        .IsUnique();
 
                     b.HasIndex("RecieverId");
 

@@ -177,7 +177,8 @@ namespace Syncord.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     SenderId = table.Column<string>(type: "varchar(255)", nullable: false),
-                    RecieverId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    RecieverId = table.Column<string>(type: "varchar(255)", nullable: false),
+                    CombinedIds = table.Column<string>(type: "varchar(255)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -238,6 +239,12 @@ namespace Syncord.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_friendRequests_CombinedIds",
+                table: "friendRequests",
+                column: "CombinedIds",
                 unique: true);
 
             migrationBuilder.CreateIndex(

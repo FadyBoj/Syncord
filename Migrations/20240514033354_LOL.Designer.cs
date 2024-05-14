@@ -11,8 +11,8 @@ using Syncord.Data;
 namespace Syncord.Migrations
 {
     [DbContext(typeof(SyncordContext))]
-    [Migration("20240513182143_Added_CombinedIDs_To_FriendRequests")]
-    partial class Added_CombinedIDs_To_FriendRequests
+    [Migration("20240514033354_LOL")]
+    partial class LOL
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,7 +158,7 @@ namespace Syncord.Migrations
 
                     b.Property<string>("CombinedIds")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("RecieverId")
                         .IsRequired()
@@ -169,6 +169,9 @@ namespace Syncord.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CombinedIds")
+                        .IsUnique();
 
                     b.HasIndex("RecieverId");
 
@@ -310,14 +313,14 @@ namespace Syncord.Migrations
 
             modelBuilder.Entity("Syncord.Models.FriendRequest", b =>
                 {
-                    b.HasOne("Syncord.Models.User", "Reciever")
-                        .WithMany("RecievedFriendRequests")
+                    b.HasOne("Syncord.Models.User", "Sender")
+                        .WithMany("SentFriendRequests")
                         .HasForeignKey("RecieverId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Syncord.Models.User", "Sender")
-                        .WithMany("SentFriendRequests")
+                    b.HasOne("Syncord.Models.User", "Reciever")
+                        .WithMany("RecievedFriendRequests")
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

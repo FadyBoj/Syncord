@@ -26,9 +26,14 @@ public class FriendShipRepository : IFriendShipRepository
 
     public async Task<OperationResult> SendFriendRequest(string senderId, string recieverId)
     {
+        var orderResult = StringComparer.OrdinalIgnoreCase.Compare(senderId, recieverId);
+        var combinedIds = (orderResult < 0 ? senderId : recieverId).ToString() +
+        (orderResult < 0 ? recieverId : senderId).ToString();
+
         var existingFriendRequest = await _context.friendRequests.FirstOrDefaultAsync(
-            f => f.CombinedIds == $"{senderId}{recieverId}"
+            f => f.CombinedIds == combinedIds
         );
+
 
         if (existingFriendRequest != null)
             return new OperationResult
@@ -37,8 +42,10 @@ public class FriendShipRepository : IFriendShipRepository
                 ErrorMessage = "Friend request already sent"
             };
 
+
         var sender = await _context.Users.FirstOrDefaultAsync(u => u.Id == senderId);
         var reciever = await _context.Users.FirstOrDefaultAsync(u => u.Id == recieverId);
+
 
         if (sender == null)
             return new OperationResult
@@ -58,7 +65,7 @@ public class FriendShipRepository : IFriendShipRepository
         {
             SenderId = sender.Id,
             RecieverId = reciever.Id,
-            CombinedIds = $"{sender.Id}{reciever.Id}"
+            CombinedIds = combinedIds
         };
 
         await _context.friendRequests.AddAsync(newFriendRequest);

@@ -5,7 +5,7 @@
 namespace Syncord.Migrations
 {
     /// <inheritdoc />
-    public partial class Added_CombinedIDs_ToF_FriendRequests : Migration
+    public partial class LOL : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

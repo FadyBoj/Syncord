@@ -92,6 +92,7 @@ namespace Syncord.Controllers
         public  async Task<ActionResult> GetData()
         {
             var userId = HttpContext.User.FindFirst("Id")?.Value;
+            Console.WriteLine(userId);
             var requests = await _userRepository.GetRequests(userId);
             return Ok(new{requests= requests});
         }

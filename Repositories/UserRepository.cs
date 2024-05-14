@@ -14,7 +14,7 @@ public interface IUserRepository
     Task AddOnline(string id);
     Task RemoveOnline(string id);
 
-    Task<ICollection<GetRequestVm>> GetRequests(string id);
+    Task<ICollection<FriendVm>> GetRequests(string id);
 
 }
 
@@ -73,12 +73,12 @@ public class UserRepository : IUserRepository
     }
 
 
-    public async Task<ICollection<GetRequestVm>> GetRequests(string id)
+    public async Task<ICollection<FriendVm>> GetRequests(string id)
     {
-        var user = await _context.Users.Include(u => u.SentFriendRequests).FirstOrDefaultAsync(u => u.Id == id);
-        var requests = user.SentFriendRequests.Select(f =>new GetRequestVm{
-            senderId = f.SenderId,
-            recieverId = f.RecieverId
+        var user = await _context.Users.Include(u => u.SentFriendRequests).ThenInclude(fr => fr.Reciever).FirstOrDefaultAsync(u => u.Id == id);
+        var requests = user.SentFriendRequests.Select(fr => new FriendVm
+        {
+            Email = fr.Reciever.Email
         }).ToList();
 
         return requests;

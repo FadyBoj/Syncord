@@ -11,7 +11,7 @@ using Syncord.Data;
 namespace Syncord.Migrations
 {
     [DbContext(typeof(SyncordContext))]
-    [Migration("20240513162917_Initial")]
+    [Migration("20240514032232_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -156,6 +156,10 @@ namespace Syncord.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
+                    b.Property<string>("CombinedIds")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
                     b.Property<string>("RecieverId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
@@ -165,6 +169,9 @@ namespace Syncord.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CombinedIds")
+                        .IsUnique();
 
                     b.HasIndex("RecieverId");
 
