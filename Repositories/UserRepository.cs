@@ -75,12 +75,24 @@ public class UserRepository : IUserRepository
 
     public async Task<ICollection<FriendVm>> GetRequests(string id)
     {
-        var user = await _context.Users.Include(u => u.SentFriendRequests).ThenInclude(fr => fr.Reciever).FirstOrDefaultAsync(u => u.Id == id);
-        var requests = user.SentFriendRequests.Select(fr => new FriendVm
+        var friednRequests = _context.friendRequests
+        .Include(fr => fr.Reciever)
+        .Include(fr => fr.Sender);
+
+        var sent = friednRequests.Where(fr => fr.Reciever.Id != id).Select(fr => new FriendVm
         {
-            Email = fr.Reciever.Email
+            Email = fr.Reciever.Email,
+            OutGoing = true
         }).ToList();
 
-        return requests;
+        var recieved = friednRequests.Where(fr => fr.Reciever.Id == id).Select(fr => new FriendVm
+        {
+            Email = fr.Sender.Email,
+            OutGoing = false
+        }).ToList();
+
+        var allRequests = sent.Concat(recieved).ToList();
+
+        return allRequests;
     }
 }

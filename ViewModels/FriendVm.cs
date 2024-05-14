@@ -8,6 +8,6 @@ public class FriendVm
 
     // public string lastname { get; set; }
 
-    // public bool OutGoing {get;set;}
+    public bool OutGoing {get;set;}
 
 }
