@@ -32,5 +32,20 @@ namespace Syncord.Controllers
             return Ok("Success");
         }
 
+        [HttpPost]
+        [Route("accept-request")]
+        [Authorize]
+        public async Task<ActionResult> AcceptFriendRequest(AcceptsRequestVMm data)
+        {
+            var userId = HttpContext.User.FindFirst("Id")?.Value;
+            var result = await _friendShipRepository.AcceptFriendReuqest(data.RequestId,userId);
+
+            if(!result.Succeeded)
+            return BadRequest(result.ErrorMessage);
+
+            return Ok("Success");
+            
+        }
+
     }
 }

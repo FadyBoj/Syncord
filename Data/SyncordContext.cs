@@ -30,13 +30,23 @@ public class SyncordContext : IdentityDbContext<User>
         .HasForeignKey(f => f.RecieverId)
         .OnDelete(DeleteBehavior.Restrict);
 
+        //Configure friend ships relations
+
+        modelBuilder.Entity<FriendShip>()
+        .HasOne(fs => fs.User1)
+        .WithMany(u => u.FriendShips)
+        .HasForeignKey(fs => fs.UserId1)
+        .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<FriendShip>()
+        .HasOne(fs => fs.User2)
+        .WithMany()
+        .HasForeignKey(fs => fs.UserId2)
+        .OnDelete(DeleteBehavior.Restrict);
+
     }
 
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    // {
-    //     base.OnConfiguring(optionsBuilder);
-    //     optionsBuilder.
-    // }
 
     public DbSet<FriendRequest> friendRequests { get; set; }
+    public DbSet<FriendShip> FriendShips { get; set; }
 }

@@ -13,6 +13,7 @@ public class OperationResult
 public interface IFriendShipRepository
 {
     Task<OperationResult> SendFriendRequest(string senderId, string recieverId);
+    Task<OperationResult> AcceptFriendReuqest(int requestId, string userId);
 }
 
 public class FriendShipRepository : IFriendShipRepository
@@ -75,6 +76,40 @@ public class FriendShipRepository : IFriendShipRepository
         {
             Succeeded = true,
             ErrorMessage = null
+        };
+    }
+
+    public async Task<OperationResult> AcceptFriendReuqest(int requestId, string userId)
+    {
+        var existingFriendRequest = await _context.friendRequests
+        .FirstOrDefaultAsync(fr => fr.Id == requestId && fr.RecieverId == userId);
+
+        if (existingFriendRequest == null)
+            return new OperationResult
+            {
+                Succeeded = false,
+                ErrorMessage = "Friend reuqest doesn't exist"
+            };
+
+        var senderId = existingFriendRequest.SenderId;
+        var recieverId = existingFriendRequest.RecieverId;
+        var sortResult = StringComparer.OrdinalIgnoreCase.Compare(senderId, recieverId);
+
+        var newFriendShip = new FriendShip
+        {
+            UserId1 = sortResult < 0 ? senderId : recieverId,
+            UserId2 = sortResult < 0 ? recieverId : senderId
+        };
+
+        await _context.FriendShips.AddAsync(newFriendShip);
+        _context.friendRequests.Remove(existingFriendRequest);
+
+        await _context.SaveChangesAsync();
+
+        return new OperationResult
+        {
+            Succeeded = true,
+            ErrorMessage = "Friend request accepted successfully"
         };
     }
 

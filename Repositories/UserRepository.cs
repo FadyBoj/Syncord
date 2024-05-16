@@ -14,7 +14,7 @@ public interface IUserRepository
     Task AddOnline(string id);
     Task RemoveOnline(string id);
 
-    Task<ICollection<FriendVm>> GetRequests(string id);
+    Task<ICollection<GetRequestVm>> GetRequests(string id);
 
 }
 
@@ -73,20 +73,22 @@ public class UserRepository : IUserRepository
     }
 
 
-    public async Task<ICollection<FriendVm>> GetRequests(string id)
+    public async Task<ICollection<GetRequestVm>> GetRequests(string id)
     {
         var friednRequests = _context.friendRequests
         .Include(fr => fr.Reciever)
         .Include(fr => fr.Sender);
 
-        var sent = friednRequests.Where(fr => fr.Reciever.Id != id).Select(fr => new FriendVm
+        var sent = friednRequests.Where(fr => fr.Sender.Id == id).Select(fr => new GetRequestVm
         {
+            Id = fr.Id,
             Email = fr.Reciever.Email,
             OutGoing = true
         }).ToList();
 
-        var recieved = friednRequests.Where(fr => fr.Reciever.Id == id).Select(fr => new FriendVm
+        var recieved = friednRequests.Where(fr => fr.Reciever.Id == id).Select(fr => new GetRequestVm
         {
+            Id = fr.Id,
             Email = fr.Sender.Email,
             OutGoing = false
         }).ToList();

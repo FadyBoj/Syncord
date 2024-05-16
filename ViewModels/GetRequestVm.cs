@@ -1,8 +1,9 @@
 namespace Syncord.ViewModels;
 
 public class GetRequestVm
-{
-    public string senderId { get; set; }
-    public string recieverId { get; set; }
+{   
+    public long Id {get;set;}
+    public string Email { get; set; }
+    public bool OutGoing { get; set; }
 
 }
