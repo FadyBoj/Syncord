@@ -25,9 +25,9 @@ namespace Syncord.Controllers
         {
             var userId = HttpContext.User.FindFirst("Id")?.Value;
 
-            var result = await _friendShipRepository.SendFriendRequest(userId,data.recieverId);
-            if(!result.Succeeded)
-            return BadRequest(result.ErrorMessage);
+            var result = await _friendShipRepository.SendFriendRequest(userId, data.recieverId);
+            if (!result.Succeeded)
+                return BadRequest(result.ErrorMessage);
 
             return Ok("Success");
         }
@@ -38,13 +38,29 @@ namespace Syncord.Controllers
         public async Task<ActionResult> AcceptFriendRequest(AcceptsRequestVMm data)
         {
             var userId = HttpContext.User.FindFirst("Id")?.Value;
-            var result = await _friendShipRepository.AcceptFriendReuqest(data.RequestId,userId);
+            var result = await _friendShipRepository.AcceptFriendReuqest(data.RequestId, userId);
 
-            if(!result.Succeeded)
-            return BadRequest(result.ErrorMessage);
+            if (!result.Succeeded)
+                return BadRequest(result.ErrorMessage);
 
-            return Ok("Success");
-            
+            return Ok("Friend request accepted successfully");
+
+        }
+
+        [HttpPost]
+        [Route("reject-request")]
+        [Authorize]
+        public async Task<ActionResult> RejectFriendRequest(AcceptsRequestVMm data)
+        {
+          
+            var userId = HttpContext.User.FindFirst("Id")?.Value;
+            var result = await _friendShipRepository.RejectFriendReuqest(data.RequestId, userId);
+
+            if (!result.Succeeded)
+                return BadRequest(result.ErrorMessage);
+
+            return Ok("Friend request rejected successfully");
+
         }
 
     }

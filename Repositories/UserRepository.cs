@@ -10,7 +10,6 @@ public interface IUserRepository
 {
     Task<IdentityResult> AddUser(RegisterVm user);
     Task<User?> GetUserByEmail(string Email);
-
     Task AddOnline(string id);
     Task RemoveOnline(string id);
 

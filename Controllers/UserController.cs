@@ -19,16 +19,18 @@ namespace Syncord.Controllers
         private readonly SignInManager<User> _signinManager;
         private readonly IConfiguration _config;
         private readonly UserManager<User> _userManager;
+        private readonly IFriendShipRepository _friendShipRepository;
 
 
 
         public UserController(IUserRepository userRepository, SignInManager<User> signinManager,
-        IConfiguration config, UserManager<User> userManager)
+        IConfiguration config, UserManager<User> userManager, IFriendShipRepository friendShipRepository)
         {
             _userRepository = userRepository;
             _signinManager = signinManager;
             _config = config;
             _userManager = userManager;
+            _friendShipRepository = friendShipRepository;
         }
 
         [HttpPost]
@@ -89,12 +91,23 @@ namespace Syncord.Controllers
         [HttpGet]
         [Route("requests")]
         [Authorize]
-        public  async Task<ActionResult> GetData()
+        public async Task<ActionResult> GetData()
         {
             var userId = HttpContext.User.FindFirst("Id")?.Value;
             Console.WriteLine(userId);
             var requests = await _userRepository.GetRequests(userId);
-            return Ok(new{requests= requests});
+            return Ok(new { requests = requests });
+        }
+
+        [HttpGet]
+        [Route("Friends")]
+        [Authorize]
+        public async Task<ActionResult> Friends()
+        {
+            var userId = HttpContext.User.FindFirst("Id")?.Value;
+            var friends = await _friendShipRepository.GetFriends(userId);
+
+            return Ok(friends);
         }
 
     }

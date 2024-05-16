@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Syncord.Data;
 using Syncord.Models;
+using Syncord.ViewModels;
 
 namespace Syncord.Repositories;
 
@@ -14,6 +15,9 @@ public interface IFriendShipRepository
 {
     Task<OperationResult> SendFriendRequest(string senderId, string recieverId);
     Task<OperationResult> AcceptFriendReuqest(int requestId, string userId);
+    Task<OperationResult> RejectFriendReuqest(int requestId, string userId);
+
+    Task<IEnumerable<FriendVm>> GetFriends(string userId);
 }
 
 public class FriendShipRepository : IFriendShipRepository
@@ -111,6 +115,51 @@ public class FriendShipRepository : IFriendShipRepository
             Succeeded = true,
             ErrorMessage = "Friend request accepted successfully"
         };
+    }
+
+    public async Task<OperationResult> RejectFriendReuqest(int requestId, string userId)
+    {
+        var existingFriendRequest = await _context.friendRequests
+                .FirstOrDefaultAsync(fr => fr.Id == requestId && fr.RecieverId == userId);
+
+        if (existingFriendRequest == null)
+            return new OperationResult
+            {
+                Succeeded = false,
+                ErrorMessage = "Friend reuqest doesn't exist"
+            };
+
+        _context.friendRequests.Remove(existingFriendRequest);
+        await _context.SaveChangesAsync();
+
+        return new OperationResult
+        {
+            Succeeded = true,
+            ErrorMessage = null
+        };
+    }
+
+    public async Task<IEnumerable<FriendVm>> GetFriends(string userId)
+    {
+        var friendShips = await _context.FriendShips
+        .Include(fs => fs.User1)
+        .Include(fs => fs.User2)
+        .Where(fs => fs.UserId1 == userId || fs.UserId2 == userId)
+        .ToListAsync();
+
+
+        var friends = friendShips.Select(fs => new FriendVm
+        {   
+            Id = fs.Id.ToString(),
+            UserId = fs.User1.Id != userId ? fs.User1.Id : fs.User2.Id,
+            Email = fs.User1.Id != userId ? fs.User1.Email : fs.User2.Email,
+            Firstname = fs.User1.Id != userId ? fs.User1.Firstname : fs.User2.Firstname,
+            Lastname = fs.User1.Id != userId ? fs.User1.Lastname : fs.User2.Lastname,
+            
+        }).ToList();
+
+        return friends;
+
     }
 
 }
