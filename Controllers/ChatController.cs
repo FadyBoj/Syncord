@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Syncord.Hubs;
 using Syncord.Repositories;
 using Syncord.ViewModels;
 
@@ -12,9 +14,11 @@ namespace Syncord.Controllers
     {
 
         private readonly IChatRepository _chatRepository;
-        public ChatController(IChatRepository chatRepository)
+        private readonly IHubContext<MsgHub> _hubContext;
+        public ChatController(IChatRepository chatRepository, IHubContext<MsgHub> hubContext)
         {
             _chatRepository = chatRepository;
+            _hubContext = hubContext;
         }
 
         [HttpPost]
@@ -27,6 +31,9 @@ namespace Syncord.Controllers
 
             if(!result.Succeeded)
             return BadRequest(result.ErrorMessage);
+            
+            var recieverId = result.recieverId;
+            await _hubContext.Clients.User(recieverId).SendAsync("  ",data.Message);
 
             return Ok("Message sent");
         }

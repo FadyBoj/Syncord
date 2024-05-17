@@ -9,6 +9,8 @@ public class OperationResult
 {
     public bool Succeeded { get; set; }
     public string? ErrorMessage { get; set; }
+    
+    public string? recieverId {get;set;}
 }
 
 public interface IFriendShipRepository
