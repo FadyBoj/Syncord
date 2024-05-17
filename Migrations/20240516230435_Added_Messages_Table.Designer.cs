@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Syncord.Data;
 
@@ -10,9 +11,11 @@ using Syncord.Data;
 namespace Syncord.Migrations
 {
     [DbContext(typeof(SyncordContext))]
-    partial class SyncordContextModelSnapshot : ModelSnapshot
+    [Migration("20240516230435_Added_Messages_Table")]
+    partial class Added_Messages_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

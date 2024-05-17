@@ -69,6 +69,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //Add scopped services
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IFriendShipRepository,FriendShipRepository>();
+builder.Services.AddScoped<IChatRepository,ChatRepository>();
 
 //Configure real time 
 builder.Services.AddSignalR();
