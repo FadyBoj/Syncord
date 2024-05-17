@@ -26,16 +26,24 @@ namespace Syncord.Controllers
         public async Task<ActionResult> SendMessage(SendMessageVm data)
         {
             var userId = HttpContext.User.FindFirst("Id")?.Value;
+            var result = await _chatRepository.SendMessage(data.FriendShipId, data.Message, userId);
 
-           var result =  await _chatRepository.SendMessage(data.FriendShipId,data.Message,userId);
+            if (!result.Succeeded)
+                return BadRequest(result.ErrorMessage);
 
-            if(!result.Succeeded)
-            return BadRequest(result.ErrorMessage);
-            
             var recieverId = result.recieverId;
-            await _hubContext.Clients.User(recieverId).SendAsync("  ",data.Message);
+            await _hubContext.Clients.User(recieverId).SendAsync("RecieveMessage", data.Message);
 
             return Ok("Message sent");
+        }
+
+        [HttpGet("{friendShipId}")]
+        [Authorize]
+        public async Task<ActionResult> GetMessages(int friendShipId,int skip = 0)
+        {
+            var userId = HttpContext.User.FindFirst("Id")?.Value;
+            var messages = await _chatRepository.GetMessages(friendShipId, userId,skip);
+            return Ok(messages);
         }
     }
 }
