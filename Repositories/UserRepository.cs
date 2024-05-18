@@ -12,8 +12,8 @@ public interface IUserRepository
     Task<User?> GetUserByEmail(string Email);
     Task AddOnline(string id);
     Task RemoveOnline(string id);
-
     Task<ICollection<GetRequestVm>> GetRequests(string id);
+    Task<bool> IsUserExist(string email);
 
 }
 
@@ -95,5 +95,15 @@ public class UserRepository : IUserRepository
         var allRequests = sent.Concat(recieved).ToList();
 
         return allRequests;
+    }
+
+    public async Task<bool> IsUserExist(string email)
+    {
+        var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
+
+        if(existingUser == null)
+        return false;
+
+        return true;
     }
 }

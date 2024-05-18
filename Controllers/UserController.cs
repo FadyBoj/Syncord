@@ -110,5 +110,13 @@ namespace Syncord.Controllers
             return Ok(friends);
         }
 
+        [HttpPost]
+        [Route("check-user-exist")]
+        public async Task<ActionResult> CheckUserExist(CheckExistVm data)
+        {
+            var result = await _userRepository.IsUserExist(data.Email);
+            return Ok(result);
+        }
+
     }
 }
