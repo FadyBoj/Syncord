@@ -42,11 +42,36 @@ namespace Syncord.Controllers
                 return BadRequest("This email is already taken");
 
             var result = await _userRepository.AddUser(user);
-
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
-            return Ok("Your account has been created successfully");
+            var addedUser = await _userRepository.GetUserByEmail(user.Email);
+
+            //Generating jwt 
+            var jwtIssuer = _config["Jwt:Issuer"];
+            var jwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var jwtCredentials = new SigningCredentials(jwtKey, SecurityAlgorithms.HmacSha256);
+
+            var userClaims = new[]{
+                new Claim("Id",addedUser.Id),
+                new Claim(ClaimTypes.Email,addedUser.Email)
+            };
+
+            var secToken = new JwtSecurityToken(
+                issuer: jwtIssuer,
+                audience: jwtIssuer,
+                claims: userClaims,
+                expires: DateTime.Now.AddMinutes(100),
+                signingCredentials: jwtCredentials
+            );
+
+            var token = new JwtSecurityTokenHandler().WriteToken(secToken);
+
+            return Ok(new
+            {
+                msg = "Your account has been created successfully",
+                token = token
+            });
         }
 
         [HttpPost]

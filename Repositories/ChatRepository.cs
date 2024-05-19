@@ -10,7 +10,7 @@ namespace Syncord.Repositories;
 public interface IChatRepository
 {
     Task<OperationResult> SendMessage(int FriendShipId, string message, string userId);
-    Task<IEnumerable<GetMessageVm>> GetMessages(int FriendShipId, string userId,int skip);
+    Task<IEnumerable<GetMessageVm>> GetMessages(int FriendShipId, string userId, int skip);
 
 }
 
@@ -28,7 +28,6 @@ public class ChatRepository : IChatRepository
     public async Task<OperationResult>? SendMessage(int FriendShipId, string message, string userId)
     {
         var friendShip = await _context.FriendShips.FirstOrDefaultAsync(fs => fs.Id == FriendShipId);
-        var recieverId = friendShip.UserId1 != userId ? friendShip.UserId1 : friendShip.UserId2;
 
         if (
             friendShip == null ||
@@ -39,6 +38,8 @@ public class ChatRepository : IChatRepository
                 Succeeded = false,
                 ErrorMessage = "Forbidden"
             };
+
+        var recieverId = friendShip.UserId1 != userId ? friendShip.UserId1 : friendShip.UserId2;
 
         var newMessage = new Message
         {
@@ -60,7 +61,7 @@ public class ChatRepository : IChatRepository
 
     }
 
-    public async Task<IEnumerable<GetMessageVm>> GetMessages(int FriendShipId, string userId,int skip)
+    public async Task<IEnumerable<GetMessageVm>> GetMessages(int FriendShipId, string userId, int skip)
     {
         var friendShip = await _context.FriendShips
         .Include(fs => fs.Messages)

@@ -7,7 +7,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnxcI63+rc0KdPK7klxiZmQAAAAACAAAAAAAQZgAAAAEAACAAAACfLo7nbLLcN96/tNtxEcF/lqvOlPjtQgJG6DMmvE8lxgAAAAAOgAAAAAIAACAAAADZdk8H1Xyp+TRw5b6jgSGcVdU37EsSmx/MDu5mihSMBiAAAAAErX6eRyL/vjJZ60hSTk9ueZLKGGZK2k/8mXBol05ANUAAAAAUSxTRzWlT1Gn8XZAuyjwTNgeGmCk5PU7rxvUmwq/pngbCNL/FPfbc/1hPk/7ocx6jRiuNYD6fkn/QnIJOe9o0</EncryptedPassword>
     <_PublishTargetUrl>ftp://Syncord.somee.com/www.Syncord.somee.com</_PublishTargetUrl>
-    <History>True|2024-05-18T07:17:53.3426362Z;True|2024-05-18T10:07:32.2147045+03:00;</History>
+    <History>True|2024-05-18T09:24:11.0710215Z;False|2024-05-18T12:20:37.8346354+03:00;True|2024-05-18T10:17:53.3426362+03:00;True|2024-05-18T10:07:32.2147045+03:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -135,16 +135,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>07/19/2022 17:21:48</publishTime>
     </File>
     <File Include="Syncord.deps.json">
-      <publishTime>05/18/2024 10:14:40</publishTime>
+      <publishTime>05/18/2024 12:20:56</publishTime>
     </File>
     <File Include="Syncord.dll">
-      <publishTime>05/18/2024 10:14:39</publishTime>
+      <publishTime>05/18/2024 12:20:56</publishTime>
     </File>
     <File Include="Syncord.exe">
-      <publishTime>05/18/2024 10:14:39</publishTime>
+      <publishTime>05/18/2024 12:20:56</publishTime>
     </File>
     <File Include="Syncord.pdb">
-      <publishTime>05/18/2024 10:14:39</publishTime>
+      <publishTime>05/18/2024 12:20:56</publishTime>
     </File>
     <File Include="Syncord.runtimeconfig.json">
       <publishTime>05/18/2024 09:21:04</publishTime>
@@ -168,7 +168,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/15/2019 10:56:52</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>05/18/2024 10:14:40</publishTime>
+      <publishTime>05/18/2024 12:20:56</publishTime>
     </File>
     <File Include="wwwroot/js/signalr/dist/browser/signalr.js">
       <publishTime>05/18/2024 08:48:55</publishTime>
