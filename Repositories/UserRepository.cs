@@ -111,16 +111,6 @@ public class UserRepository : IUserRepository
 
     public async Task<Object> Dashboard(string id)
     {
-
-        // var user = await _context.Users
-        // .Where(u => u.Id == id)
-        // .Include(u => u.FriendShips)
-        // .ThenInclude(fs => fs.User2)
-        // .Include(u => u.FriendShips)
-        // .ThenInclude(fs => fs.User1)
-        // .FirstOrDefaultAsync();
-
-
         var user = await _context.Users.Where(u => u.Id == id)
         .Include(u => u.FriendShips)
              .ThenInclude(fs => fs.User1)
@@ -130,22 +120,58 @@ public class UserRepository : IUserRepository
              .ThenInclude(fs => fs.User1)
         .Include(fs => fs.FriendShipsHolder)
              .ThenInclude(fs => fs.User2)
+        .Include(u => u.SentFriendRequests)
+            .ThenInclude(sf => sf.Reciever)
+        .Include(u => u.RecievedFriendRequests)
+            .ThenInclude(rf => rf.Sender)
         .FirstOrDefaultAsync();
 
-
-        var formatted = user.FriendShips.Select(fs => new
+        //Formating friends
+        var friends = user.FriendShips.Select(fs => new FriendVm
         {
-            Email = fs.UserId1 != id ? fs.User1.Email : fs.User2.Email
+            Id = fs.UserId1 != id ? fs.UserId1 : fs.UserId2,
+            Email = fs.UserId1 != id ? fs.User1.Email : fs.User2.Email,
+            Firstname = fs.UserId1 != id ? fs.User1.Firstname : fs.User2.Firstname,
+            Lastname = fs.UserId1 != id ? fs.User1.Lastname : fs.User2.Lastname
         }).ToList();
 
-        var formatted2 = user.FriendShipsHolder.Select(fs => new
+        var friendsHolder = user.FriendShipsHolder.Select(fs => new FriendVm
         {
-            Email = fs.UserId1 != id ? fs.User1.Email : fs.User2.Email
-        }).ToArray();
+            Id = fs.UserId1 != id ? fs.UserId1 : fs.UserId2,
+            Email = fs.UserId1 != id ? fs.User1.Email : fs.User2.Email,
+            Firstname = fs.UserId1 != id ? fs.User1.Firstname : fs.User2.Firstname,
+            Lastname = fs.UserId1 != id ? fs.User1.Lastname : fs.User2.Lastname
+        }).ToList();
 
-        var all = formatted.Concat(formatted2);
+        //Formating requests
 
-        return all;
+        var recievedRequests = user.RecievedFriendRequests.Select(rf => new GetRequestVm
+        {
+            Id = rf.Id,
+            UserId = rf.SenderId,
+            Email = rf.Sender.Email,
+            OutGoing = false
+        });
+
+        var sentRequests = user.SentFriendRequests.Select(rf => new GetRequestVm
+        {
+            Id = rf.Id,
+            UserId = rf.RecieverId,
+            Email = rf.Reciever.Email,
+            OutGoing = true
+        });
+
+        var dashboard = new DashboardVm
+        {
+            Id = user.Id,
+            Email = user.Email,
+            Firstname = user.Firstname,
+            Lastname=  user.Lastname,
+            Requests = recievedRequests.Concat(sentRequests).ToList(),
+            Friends = friends.Concat(friendsHolder).ToList()
+        };
+
+        return dashboard;
 
 
     }
