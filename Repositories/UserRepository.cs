@@ -15,6 +15,8 @@ public interface IUserRepository
     Task<ICollection<GetRequestVm>> GetRequests(string id);
     Task<bool> IsUserExist(string email);
 
+    Task<Object> Dashboard(string id);
+
 }
 
 public class UserRepository : IUserRepository
@@ -101,9 +103,50 @@ public class UserRepository : IUserRepository
     {
         var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
 
-        if(existingUser == null)
-        return false;
+        if (existingUser == null)
+            return false;
 
         return true;
+    }
+
+    public async Task<Object> Dashboard(string id)
+    {
+
+        // var user = await _context.Users
+        // .Where(u => u.Id == id)
+        // .Include(u => u.FriendShips)
+        // .ThenInclude(fs => fs.User2)
+        // .Include(u => u.FriendShips)
+        // .ThenInclude(fs => fs.User1)
+        // .FirstOrDefaultAsync();
+
+
+        var user = await _context.Users.Where(u => u.Id == id)
+        .Include(u => u.FriendShips)
+             .ThenInclude(fs => fs.User1)
+        .Include(u => u.FriendShips)
+            .ThenInclude(fs => fs.User2)
+        .Include(u => u.FriendShipsHolder)
+             .ThenInclude(fs => fs.User1)
+        .Include(fs => fs.FriendShipsHolder)
+             .ThenInclude(fs => fs.User2)
+        .FirstOrDefaultAsync();
+
+
+        var formatted = user.FriendShips.Select(fs => new
+        {
+            Email = fs.UserId1 != id ? fs.User1.Email : fs.User2.Email
+        }).ToList();
+
+        var formatted2 = user.FriendShipsHolder.Select(fs => new
+        {
+            Email = fs.UserId1 != id ? fs.User1.Email : fs.User2.Email
+        }).ToArray();
+
+        var all = formatted.Concat(formatted2);
+
+        return all;
+
+
     }
 }

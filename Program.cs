@@ -9,6 +9,7 @@ using System.Text;
 using Syncord.Hubs;
 using Syncord.providers;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,16 +27,12 @@ builder.Services.AddDbContext<SyncordContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("Default");
 
     if (connectionString != null)
-        options.UseMySQL(connectionString);
+        options.UseNpgsql(connectionString);
+
+    options.ConfigureWarnings(warnings =>
+    warnings.Ignore(CoreEventId.NavigationBaseIncludeIgnored,CoreEventId.NavigationBaseIncluded));
 });
 
-builder.Services.AddDbContext<SyncordContext>(options =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("Default");
-
-    if (connectionString != null)
-        options.UseMySQL(connectionString);
-});
 
 //user api endpoints
 builder.Services.AddIdentityApiEndpoints<User>(options =>

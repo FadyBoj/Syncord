@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ZmGnwyznoZUdv5KZ46QEl4wP2tGWd7r+19A8ZiDrnD0g6OiqZP/8da0URrkP5cpx5FYTbsGWwN1V1g6nyXgFzg==",
+  "dgSpecHash": "ph08wA3Ti3h7Z2vtZ2tdZ1yusqz5TjckNA1BhuFWy9K0CzHk8UPOLt8n8Vbhb9/YYnUjaMJabR/gjYmo69QZhQ==",
   "success": true,
   "projectFilePath": "C:\\PC\\Projects\\Syncord\\Syncord.csproj",
   "expectedPackageFiles": [
@@ -51,6 +51,8 @@
     "C:\\Users\\fadyn\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\fadyn\\.nuget\\packages\\mysql.data\\8.4.0\\mysql.data.8.4.0.nupkg.sha512",
     "C:\\Users\\fadyn\\.nuget\\packages\\mysql.entityframeworkcore\\8.0.2\\mysql.entityframeworkcore.8.0.2.nupkg.sha512",
+    "C:\\Users\\fadyn\\.nuget\\packages\\npgsql\\8.0.3\\npgsql.8.0.3.nupkg.sha512",
+    "C:\\Users\\fadyn\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\8.0.4\\npgsql.entityframeworkcore.postgresql.8.0.4.nupkg.sha512",
     "C:\\Users\\fadyn\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "C:\\Users\\fadyn\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "C:\\Users\\fadyn\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",

@@ -30,6 +30,8 @@ C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Microsoft.OpenApi.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\MySql.Data.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\MySql.EntityFrameworkCore.dll
+C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Npgsql.dll
+C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll
