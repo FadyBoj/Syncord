@@ -25,5 +25,7 @@ public class User : IdentityUser
     public ICollection<FriendRequest> SentFriendRequests { get; } = new List<FriendRequest>();
     public ICollection<FriendRequest> RecievedFriendRequests { get; } = new List<FriendRequest>();
     public ICollection<FriendShip> FriendShips { get; } = new List<FriendShip>();
+    public ICollection<FriendShip> FriendShipsHolder { get; } = new List<FriendShip>();
+
 
 }

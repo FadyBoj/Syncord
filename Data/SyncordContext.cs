@@ -41,7 +41,7 @@ public class SyncordContext : IdentityDbContext<User>
 
         modelBuilder.Entity<FriendShip>()
         .HasOne(fs => fs.User2)
-        .WithMany()
+        .WithMany(u => u.FriendShipsHolder)
         .HasForeignKey(fs => fs.UserId2)
         .OnDelete(DeleteBehavior.Restrict);
 
@@ -58,6 +58,8 @@ public class SyncordContext : IdentityDbContext<User>
         .WithMany()
         .HasForeignKey(m => m.SenderId)
         .OnDelete(DeleteBehavior.Restrict);
+
+
 
     }
 

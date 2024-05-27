@@ -143,5 +143,15 @@ namespace Syncord.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Authorize]
+        [Route("dashboard")]
+        public async Task<ActionResult<DashboardVm>> Dashboard()
+        {
+            var userId = HttpContext.User.FindFirst("Id")?.Value;
+            var dashboard = await _userRepository.Dashboard(userId);
+            return Ok(dashboard);
+        }
+
     }
 }
