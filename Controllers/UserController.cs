@@ -1,6 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,17 +23,20 @@ namespace Syncord.Controllers
         private readonly IConfiguration _config;
         private readonly UserManager<User> _userManager;
         private readonly IFriendShipRepository _friendShipRepository;
+        private readonly Cloudinary _cloudinary;
 
 
 
         public UserController(IUserRepository userRepository, SignInManager<User> signinManager,
-        IConfiguration config, UserManager<User> userManager, IFriendShipRepository friendShipRepository)
+        IConfiguration config, UserManager<User> userManager, IFriendShipRepository friendShipRepository,
+        Cloudinary cloudinary)
         {
             _userRepository = userRepository;
             _signinManager = signinManager;
             _config = config;
             _userManager = userManager;
             _friendShipRepository = friendShipRepository;
+            _cloudinary = cloudinary;
         }
 
         [HttpPost]
@@ -151,6 +157,35 @@ namespace Syncord.Controllers
             var userId = HttpContext.User.FindFirst("Id")?.Value;
             var dashboard = await _userRepository.Dashboard(userId);
             return Ok(dashboard);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("image")]
+        public async Task<ActionResult> Image(UploadImageVm data)
+        {
+            var userId = HttpContext.User.FindFirst("Id")?.Value;
+            var Image = data.Image;
+            var uploadResult = new ImageUploadResult();
+            using (var stream = Image.OpenReadStream())
+            {
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(Image.FileName, stream)
+                };
+
+                uploadResult = await _cloudinary.UploadAsync(uploadParams);
+            }
+
+            if(uploadResult.StatusCode != HttpStatusCode.OK)
+            return StatusCode(500,new {msg="Something went wrong",statusCode=500});
+
+            var result = await _userRepository.UploadProfilePicture(userId,uploadResult.Url.ToString());
+
+            if(!result.Succeeded)
+            return  StatusCode(500,new {msg=result.ErrorMessage,statusCode=500});
+
+            return Ok(new {msg="Profile picture updated successfully",StatusCode=200});
         }
 
     }

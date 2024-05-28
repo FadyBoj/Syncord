@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Syncord.Data;
@@ -14,10 +16,12 @@ public interface IUserRepository
     Task RemoveOnline(string id);
     Task<ICollection<GetRequestVm>> GetRequests(string id);
     Task<bool> IsUserExist(string email);
-
     Task<Object> Dashboard(string id);
+    Task<OperationResult> UploadProfilePicture(string userId, string image);
 
 }
+
+
 
 public class UserRepository : IUserRepository
 {
@@ -166,13 +170,36 @@ public class UserRepository : IUserRepository
             Id = user.Id,
             Email = user.Email,
             Firstname = user.Firstname,
-            Lastname=  user.Lastname,
+            Lastname = user.Lastname,
+            Image = user.Image,
             Requests = recievedRequests.Concat(sentRequests).ToList(),
             Friends = friends.Concat(friendsHolder).ToList()
         };
 
         return dashboard;
+    }
 
+    public async Task<OperationResult> UploadProfilePicture(string userId, string image)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+        if (user == null)
+            return new OperationResult
+            {
+                Succeeded = false,
+                ErrorMessage = "User is not found"
+            };
+
+        user.Image = image;
+        _context.SaveChangesAsync();
+
+        return new OperationResult
+        {
+            Succeeded = true,
+            ErrorMessage = null
+        };
 
     }
+
+
 }

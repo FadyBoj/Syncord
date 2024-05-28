@@ -10,6 +10,7 @@ using Syncord.Hubs;
 using Syncord.providers;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using CloudinaryDotNet;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,6 +68,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IFriendShipRepository,FriendShipRepository>();
 builder.Services.AddScoped<IChatRepository,ChatRepository>();
+
+//Configure cloudinary 
+var cloudinaryKey = builder.Configuration["Cloudinary:Key"];
+var cloudinarySecret = builder.Configuration["Cloudinary:Secret"];
+Cloudinary cloudinary = new Cloudinary($"cloudinary://{cloudinaryKey}:{cloudinarySecret}@ddivi7f83");
+builder.Services.AddSingleton(cloudinary);
 
 //Configure real time 
 builder.Services.AddSignalR();
