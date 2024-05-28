@@ -6,6 +6,8 @@ C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Syncord.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Syncord.runtimeconfig.json
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Syncord.pdb
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\BouncyCastle.Cryptography.dll
+C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\CloudinaryDotNet.dll
+C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\dotenv.net.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Google.Protobuf.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\K4os.Compression.LZ4.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\K4os.Compression.LZ4.Streams.dll
@@ -30,6 +32,7 @@ C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Microsoft.OpenApi.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\MySql.Data.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\MySql.EntityFrameworkCore.dll
+C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Newtonsoft.Json.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Npgsql.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\PC\Projects\Syncord\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll

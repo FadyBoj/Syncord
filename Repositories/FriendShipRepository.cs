@@ -9,8 +9,13 @@ public class OperationResult
 {
     public bool Succeeded { get; set; }
     public string? ErrorMessage { get; set; }
-    
-    public string? recieverId {get;set;}
+
+    public string? recieverId { get; set; }
+}
+
+public class FriendId
+{
+    public string Id { get; set; }
 }
 
 public interface IFriendShipRepository
@@ -18,8 +23,8 @@ public interface IFriendShipRepository
     Task<OperationResult> SendFriendRequest(string senderId, string recieverId);
     Task<OperationResult> AcceptFriendReuqest(int requestId, string userId);
     Task<OperationResult> RejectFriendReuqest(int requestId, string userId);
-
     Task<IEnumerable<FriendVm>> GetFriends(string userId);
+    Task<List<string>> GetFriendsIds(string userId);
 }
 
 public class FriendShipRepository : IFriendShipRepository
@@ -151,14 +156,33 @@ public class FriendShipRepository : IFriendShipRepository
 
 
         var friends = friendShips.Select(fs => new FriendVm
-        {   
+        {
             Id = fs.Id.ToString(),
             UserId = fs.User1.Id != userId ? fs.User1.Id : fs.User2.Id,
             Email = fs.User1.Id != userId ? fs.User1.Email : fs.User2.Email,
             Firstname = fs.User1.Id != userId ? fs.User1.Firstname : fs.User2.Firstname,
             Lastname = fs.User1.Id != userId ? fs.User1.Lastname : fs.User2.Lastname,
-            
+
         }).ToList();
+
+        return friends;
+
+    }
+
+    public async Task<List<string>> GetFriendsIds(string userId)
+    {
+        var friendShips = await _context.FriendShips
+        .Include(fs => fs.User1)
+        .Include(fs => fs.User2)
+        .Where(fs => fs.UserId1 == userId || fs.UserId2 == userId)
+        .ToListAsync();
+
+
+        var friends = friendShips.Select(fs =>
+
+             fs.User1.Id != userId ? fs.User1.Id : fs.User2.Id
+
+        ).ToList();
 
         return friends;
 
