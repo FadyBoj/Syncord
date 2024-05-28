@@ -25,8 +25,14 @@ namespace Syncord.Hubs
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var _userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
+                var _friendShipRepository = scope.ServiceProvider.GetRequiredService<IFriendShipRepository>();
+                
                 await _userRepository.AddOnline(userId);
-            }
+
+                //Send signals to all the user friends 
+                var friendsIds = await  _friendShipRepository.GetFriendsIds(userId);
+                await Clients.Users(friendsIds).SendAsync("hoppedOnline",userId);
+                }
 
             return base.OnConnectedAsync();
         }

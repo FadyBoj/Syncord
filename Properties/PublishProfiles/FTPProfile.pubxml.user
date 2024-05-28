@@ -7,7 +7,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAnxcI63+rc0KdPK7klxiZmQAAAAACAAAAAAAQZgAAAAEAACAAAACfLo7nbLLcN96/tNtxEcF/lqvOlPjtQgJG6DMmvE8lxgAAAAAOgAAAAAIAACAAAADZdk8H1Xyp+TRw5b6jgSGcVdU37EsSmx/MDu5mihSMBiAAAAAErX6eRyL/vjJZ60hSTk9ueZLKGGZK2k/8mXBol05ANUAAAAAUSxTRzWlT1Gn8XZAuyjwTNgeGmCk5PU7rxvUmwq/pngbCNL/FPfbc/1hPk/7ocx6jRiuNYD6fkn/QnIJOe9o0</EncryptedPassword>
     <_PublishTargetUrl>ftp://Syncord.somee.com/www.Syncord.somee.com</_PublishTargetUrl>
-    <History>True|2024-05-28T13:41:47.8909904Z;True|2024-05-28T02:49:24.5062304+03:00;True|2024-05-19T13:54:56.3335280+03:00;True|2024-05-19T07:55:31.1741075+03:00;True|2024-05-18T12:24:11.0710215+03:00;False|2024-05-18T12:20:37.8346354+03:00;True|2024-05-18T10:17:53.3426362+03:00;True|2024-05-18T10:07:32.2147045+03:00;</History>
+    <History>True|2024-05-28T14:32:01.1495658Z;True|2024-05-28T16:41:47.8909904+03:00;True|2024-05-28T02:49:24.5062304+03:00;True|2024-05-19T13:54:56.3335280+03:00;True|2024-05-19T07:55:31.1741075+03:00;True|2024-05-18T12:24:11.0710215+03:00;False|2024-05-18T12:20:37.8346354+03:00;True|2024-05-18T10:17:53.3426362+03:00;True|2024-05-18T10:07:32.2147045+03:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -24,19 +24,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/16/2024 19:43:28</publishTime>
     </File>
     <File Include="dotenv.net.dll">
-      <publishTime>11/05/2023 03:18:10</publishTime>
+      <publishTime>05/11/2023 03:18:10</publishTime>
     </File>
     <File Include="Google.Protobuf.dll">
       <publishTime>11/15/2023 13:29:56</publishTime>
     </File>
     <File Include="K4os.Compression.LZ4.dll">
-      <publishTime>06/01/2023 19:16:12</publishTime>
+      <publishTime>01/06/2023 19:16:12</publishTime>
     </File>
     <File Include="K4os.Compression.LZ4.Streams.dll">
-      <publishTime>06/01/2023 19:16:12</publishTime>
+      <publishTime>01/06/2023 19:16:12</publishTime>
     </File>
     <File Include="K4os.Hash.xxHash.dll">
-      <publishTime>08/11/2022 20:08:14</publishTime>
+      <publishTime>11/08/2022 20:08:14</publishTime>
     </File>
     <File Include="libman.json">
       <publishTime>05/18/2024 08:48:55</publishTime>
@@ -102,13 +102,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/18/2024 09:50:50</publishTime>
     </File>
     <File Include="Newtonsoft.Json.dll">
-      <publishTime>03/08/2023 09:09:54</publishTime>
+      <publishTime>08/03/2023 09:09:54</publishTime>
     </File>
     <File Include="Npgsql.dll">
-      <publishTime>05/09/2024 16:45:24</publishTime>
+      <publishTime>09/05/2024 16:45:24</publishTime>
     </File>
     <File Include="Npgsql.EntityFrameworkCore.PostgreSQL.dll">
-      <publishTime>05/11/2024 19:08:28</publishTime>
+      <publishTime>11/05/2024 19:08:28</publishTime>
     </File>
     <File Include="runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll">
       <publishTime>11/15/2019 10:56:36</publishTime>
@@ -150,16 +150,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>07/19/2022 17:21:48</publishTime>
     </File>
     <File Include="Syncord.deps.json">
-      <publishTime>05/28/2024 16:38:13</publishTime>
+      <publishTime>05/28/2024 17:28:35</publishTime>
     </File>
     <File Include="Syncord.dll">
-      <publishTime>05/28/2024 16:38:07</publishTime>
+      <publishTime>05/28/2024 17:28:34</publishTime>
     </File>
     <File Include="Syncord.exe">
-      <publishTime>05/28/2024 16:38:07</publishTime>
+      <publishTime>05/28/2024 17:28:34</publishTime>
     </File>
     <File Include="Syncord.pdb">
-      <publishTime>05/28/2024 16:38:07</publishTime>
+      <publishTime>05/28/2024 17:28:34</publishTime>
     </File>
     <File Include="Syncord.runtimeconfig.json">
       <publishTime>05/28/2024 16:38:08</publishTime>
@@ -183,13 +183,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/15/2019 10:56:52</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>05/28/2024 16:38:13</publishTime>
+      <publishTime>05/28/2024 17:28:35</publishTime>
     </File>
     <File Include="wwwroot/js/signalr/dist/browser/signalr.js">
       <publishTime>05/18/2024 08:48:55</publishTime>
     </File>
     <File Include="ZstdSharp.dll">
-      <publishTime>06/04/2023 14:25:30</publishTime>
+      <publishTime>04/06/2023 14:25:30</publishTime>
     </File>
   </ItemGroup>
 </Project>

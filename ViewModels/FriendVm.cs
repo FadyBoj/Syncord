@@ -9,4 +9,6 @@ public class FriendVm
     public string Firstname { get; set; }
     public string Lastname { get; set; }
 
+    public bool IsOnline {get;set;}
+
 }

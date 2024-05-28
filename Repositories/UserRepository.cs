@@ -136,7 +136,8 @@ public class UserRepository : IUserRepository
             Id = fs.UserId1 != id ? fs.UserId1 : fs.UserId2,
             Email = fs.UserId1 != id ? fs.User1.Email : fs.User2.Email,
             Firstname = fs.UserId1 != id ? fs.User1.Firstname : fs.User2.Firstname,
-            Lastname = fs.UserId1 != id ? fs.User1.Lastname : fs.User2.Lastname
+            Lastname = fs.UserId1 != id ? fs.User1.Lastname : fs.User2.Lastname,
+            IsOnline = fs.UserId1 != id ? fs.User1.IsOnline : fs.User2.IsOnline,
         }).ToList();
 
         var friendsHolder = user.FriendShipsHolder.Select(fs => new FriendVm
@@ -144,7 +145,8 @@ public class UserRepository : IUserRepository
             Id = fs.UserId1 != id ? fs.UserId1 : fs.UserId2,
             Email = fs.UserId1 != id ? fs.User1.Email : fs.User2.Email,
             Firstname = fs.UserId1 != id ? fs.User1.Firstname : fs.User2.Firstname,
-            Lastname = fs.UserId1 != id ? fs.User1.Lastname : fs.User2.Lastname
+            Lastname = fs.UserId1 != id ? fs.User1.Lastname : fs.User2.Lastname,
+            IsOnline = fs.UserId1 != id ? fs.User1.IsOnline : fs.User2.IsOnline,
         }).ToList();
 
         //Formating requests
