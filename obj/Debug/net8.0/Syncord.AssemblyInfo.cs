@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Syncord")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8425583cfdd021e942be63aebcf0cd602ea88416")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cad827083937d8786db1100a3900875ebed419c6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Syncord")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Syncord")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

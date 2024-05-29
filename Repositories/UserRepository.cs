@@ -137,6 +137,7 @@ public class UserRepository : IUserRepository
             Email = fs.UserId1 != id ? fs.User1.Email : fs.User2.Email,
             Firstname = fs.UserId1 != id ? fs.User1.Firstname : fs.User2.Firstname,
             Lastname = fs.UserId1 != id ? fs.User1.Lastname : fs.User2.Lastname,
+            Image = fs.UserId1 != id ? fs.User1.Image : fs.User2.Image,
             IsOnline = fs.UserId1 != id ? fs.User1.IsOnline : fs.User2.IsOnline,
         }).ToList();
 
@@ -146,6 +147,7 @@ public class UserRepository : IUserRepository
             Email = fs.UserId1 != id ? fs.User1.Email : fs.User2.Email,
             Firstname = fs.UserId1 != id ? fs.User1.Firstname : fs.User2.Firstname,
             Lastname = fs.UserId1 != id ? fs.User1.Lastname : fs.User2.Lastname,
+            Image = fs.UserId1 != id ? fs.User1.Image : fs.User2.Image,
             IsOnline = fs.UserId1 != id ? fs.User1.IsOnline : fs.User2.IsOnline,
         }).ToList();
 

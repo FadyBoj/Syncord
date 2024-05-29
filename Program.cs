@@ -31,7 +31,7 @@ builder.Services.AddDbContext<SyncordContext>(options =>
         options.UseNpgsql(connectionString);
 
     options.ConfigureWarnings(warnings =>
-    warnings.Ignore(CoreEventId.NavigationBaseIncludeIgnored,CoreEventId.NavigationBaseIncluded));
+    warnings.Ignore(CoreEventId.NavigationBaseIncludeIgnored, CoreEventId.NavigationBaseIncluded));
 });
 
 
@@ -61,13 +61,30 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
 
     };
+    options.Events = new JwtBearerEvents
+      {
+          OnMessageReceived = context =>
+          {
+              var accessToken = context.Request.Query["access_token"];
+
+              // If the request is for our hub...
+              var path = context.HttpContext.Request.Path;
+              if (!string.IsNullOrEmpty(accessToken) &&
+                  (path.StartsWithSegments("/chat")))
+              {
+                  // Read the token out of the query string
+                  context.Token = accessToken;
+              }
+              return Task.CompletedTask;
+          }
+      };
 });
 
 
 //Add scopped services
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IFriendShipRepository,FriendShipRepository>();
-builder.Services.AddScoped<IChatRepository,ChatRepository>();
+builder.Services.AddScoped<IFriendShipRepository, FriendShipRepository>();
+builder.Services.AddScoped<IChatRepository, ChatRepository>();
 
 //Configure cloudinary 
 var cloudinaryKey = builder.Configuration["Cloudinary:Key"];
@@ -78,10 +95,18 @@ builder.Services.AddSingleton(cloudinary);
 //Configure real time 
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<IUserIdProvider, EmailBasedUserIdProvider>();
-
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+                      });
+});
 var app = builder.Build();
 
-//Configure db context
 
 
 // Configure the HTTP request pipeline.
@@ -92,11 +117,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.MapHub<MsgHub>("/chat");
-
 app.Run();
