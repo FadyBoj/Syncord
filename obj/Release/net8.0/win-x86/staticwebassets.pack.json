@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\PC\\Projects\\Syncord\\wwwroot\\js\\signalr\\dist\\browser\\signalr.js",
+      "PackagePath": "staticwebassets\\js\\signalr\\dist\\browser\\signalr.js"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\win-x86\\staticwebassets\\msbuild.Syncord.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\win-x86\\staticwebassets\\msbuild.build.Syncord.props",
+      "PackagePath": "build\\Syncord.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\win-x86\\staticwebassets\\msbuild.buildMultiTargeting.Syncord.props",
+      "PackagePath": "buildMultiTargeting\\Syncord.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\win-x86\\staticwebassets\\msbuild.buildTransitive.Syncord.props",
+      "PackagePath": "buildTransitive\\Syncord.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

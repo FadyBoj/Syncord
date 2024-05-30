@@ -15,7 +15,7 @@ namespace Syncord.Hubs
             _serviceScopeFactory = serviceScopeFactory;
         }
 
-        
+
         public override async Task<System.Threading.Tasks.Task> OnConnectedAsync()
         {
             var userId = Context.User.FindFirst("Id")?.Value;
@@ -49,7 +49,13 @@ namespace Syncord.Hubs
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var _userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
+                var _friendShipRepository = scope.ServiceProvider.GetRequiredService<IFriendShipRepository>();
+
                 await _userRepository.RemoveOnline(userId);
+
+                //Send signals to all the user friends 
+                var friendsIds = await _friendShipRepository.GetFriendsIds(userId);
+                await Clients.Users(friendsIds).SendAsync("wentOffline", userId);
             }
 
             return base.OnDisconnectedAsync(exception);

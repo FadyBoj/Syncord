@@ -11,6 +11,7 @@ using Syncord.providers;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using CloudinaryDotNet;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,23 +62,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
 
     };
-    options.Events = new JwtBearerEvents
-      {
-          OnMessageReceived = context =>
-          {
-              var accessToken = context.Request.Query["access_token"];
 
-              // If the request is for our hub...
-              var path = context.HttpContext.Request.Path;
-              if (!string.IsNullOrEmpty(accessToken) &&
-                  (path.StartsWithSegments("/chat")))
-              {
-                  // Read the token out of the query string
-                  context.Token = accessToken;
-              }
-              return Task.CompletedTask;
-          }
-      };
 });
 
 
@@ -93,32 +78,30 @@ Cloudinary cloudinary = new Cloudinary($"cloudinary://{cloudinaryKey}:{cloudinar
 builder.Services.AddSingleton(cloudinary);
 
 //Configure real time 
-builder.Services.AddSignalR();
 builder.Services.AddSingleton<IUserIdProvider, EmailBasedUserIdProvider>();
+builder.Services.AddSignalR();
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-                      policy =>
+    options.AddPolicy(name: "MyAllowSpecificOrigins",
+                      policy  =>
                       {
                           policy.AllowAnyOrigin()
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
                       });
 });
 var app = builder.Build();
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-app.UseCors();
 app.UseAuthorization();
+app.UseCors("MyAllowSpecificOrigins");
 app.MapControllers();
-app.MapHub<MsgHub>("/chat");
+app.MapHub<MsgHub>("chat");
 app.Run();
