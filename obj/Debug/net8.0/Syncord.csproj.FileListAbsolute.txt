@@ -12,7 +12,6 @@ C:\PC\Projects\Syncord\obj\Debug\net8.0\Syncord.pdb
 C:\PC\Projects\Syncord\bin\Debug\net8.0\appsettings.Development.json
 C:\PC\Projects\Syncord\bin\Debug\net8.0\appsettings.json
 C:\PC\Projects\Syncord\bin\Debug\net8.0\libman.json
-C:\PC\Projects\Syncord\bin\Debug\net8.0\test.json
 C:\PC\Projects\Syncord\bin\Debug\net8.0\Syncord.staticwebassets.runtime.json
 C:\PC\Projects\Syncord\bin\Debug\net8.0\Syncord.exe
 C:\PC\Projects\Syncord\bin\Debug\net8.0\Syncord.deps.json

@@ -67,7 +67,7 @@ namespace Syncord.Controllers
                 issuer: jwtIssuer,
                 audience: jwtIssuer,
                 claims: userClaims,
-                expires: DateTime.Now.AddMinutes(100),
+                expires: DateTime.Now.AddDays(2),
                 signingCredentials: jwtCredentials
             );
 
@@ -110,7 +110,7 @@ namespace Syncord.Controllers
                 issuer: jwtIssuer,
                 audience: jwtIssuer,
                 claims: userClaims,
-                expires: DateTime.Now.AddMinutes(60),
+                expires: DateTime.Now.AddDays(2),
                 signingCredentials: jwtCredentials
             );
 
