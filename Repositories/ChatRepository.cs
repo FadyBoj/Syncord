@@ -45,8 +45,10 @@ public class ChatRepository : IChatRepository
         {
             message = message,
             SenderId = userId,
-            FriendShipId = friendShip.Id
+            FriendShipId = friendShip.Id,
+            CreatedAt =  DateTime.UtcNow
         };
+        Console.WriteLine(newMessage.CreatedAt);
 
         await _context.Messages.AddAsync(newMessage);
         await _context.SaveChangesAsync();
@@ -85,7 +87,8 @@ public class ChatRepository : IChatRepository
             Id = m.Id,
             Text = m.message,
             SenderId = m.SenderId,
-            IsSent = m.SenderId == userId ? true : false
+            IsSent = m.SenderId == userId ? true : false,
+            CreatedAt = m.CreatedAt
         }).ToList();
 
         return messages;

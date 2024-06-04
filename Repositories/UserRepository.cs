@@ -133,7 +133,7 @@ public class UserRepository : IUserRepository
         //Formating friends
         var friends = user.FriendShips.Select(fs => new FriendVm
         {
-            FriendShipUserId = fs.Id.ToString(),
+            FriendShipId = fs.Id.ToString(),
             UserId = fs.UserId1 != id ? fs.UserId1 : fs.UserId2,
             Email = fs.UserId1 != id ? fs.User1.Email : fs.User2.Email,
             Firstname = fs.UserId1 != id ? fs.User1.Firstname : fs.User2.Firstname,
@@ -144,7 +144,7 @@ public class UserRepository : IUserRepository
 
         var friendsHolder = user.FriendShipsHolder.Select(fs => new FriendVm
         {
-            FriendShipUserId = fs.Id.ToString(),
+            FriendShipId = fs.Id.ToString(),
             UserId = fs.UserId1 != id ? fs.UserId1 : fs.UserId2,
             Email = fs.UserId1 != id ? fs.User1.Email : fs.User2.Email,
             Firstname = fs.UserId1 != id ? fs.User1.Firstname : fs.User2.Firstname,

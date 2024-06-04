@@ -157,7 +157,7 @@ public class FriendShipRepository : IFriendShipRepository
 
         var friends = friendShips.Select(fs => new FriendVm
         {
-            FriendShipUserId = fs.Id.ToString(),
+            FriendShipId = fs.Id.ToString(),
             UserId = fs.User1.Id != userId ? fs.User1.Id : fs.User2.Id,
             Email = fs.User1.Id != userId ? fs.User1.Email : fs.User2.Email,
             Firstname = fs.User1.Id != userId ? fs.User1.Firstname : fs.User2.Firstname,

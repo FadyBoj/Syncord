@@ -17,5 +17,5 @@ public class Message
 
     public FriendShip FriendShip { get; set; } = null!;
 
-    public DateTime CreatedAt {get;set;} =  DateTime.UtcNow;
+    public DateTime CreatedAt {get;set;} 
 }
