@@ -45,5 +45,15 @@ namespace Syncord.Controllers
             var messages = await _chatRepository.GetMessages(friendShipId, userId,skip);
             return Ok(messages);
         }
+
+        [HttpGet]
+        [Authorize]
+        [Route("all-messages")]
+        public async Task<ActionResult> GetAllMessages()
+        {
+            var userId = HttpContext.User.FindFirst("Id")?.Value;
+            var allMessages = await  _chatRepository.GetAllMessages(userId);
+            return Ok(allMessages);
+        }
     }
 }

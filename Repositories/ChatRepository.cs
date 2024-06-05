@@ -11,6 +11,7 @@ public interface IChatRepository
 {
     Task<OperationResult> SendMessage(int FriendShipId, string message, string userId);
     Task<IEnumerable<GetMessageVm>> GetMessages(int FriendShipId, string userId, int skip);
+    Task<List<AllMessagesVm>> GetAllMessages(string userId);
 
 }
 
@@ -46,7 +47,7 @@ public class ChatRepository : IChatRepository
             message = message,
             SenderId = userId,
             FriendShipId = friendShip.Id,
-            CreatedAt =  DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow
         };
         Console.WriteLine(newMessage.CreatedAt);
 
@@ -66,7 +67,6 @@ public class ChatRepository : IChatRepository
     public async Task<IEnumerable<GetMessageVm>> GetMessages(int FriendShipId, string userId, int skip)
     {
         var friendShip = await _context.FriendShips
-        .Include(fs => fs.Messages)
         .FirstOrDefaultAsync(fs => fs.Id == FriendShipId);
 
         if (
@@ -77,7 +77,8 @@ public class ChatRepository : IChatRepository
             return new List<GetMessageVm>();
         }
 
-        var messages = friendShip.Messages
+        var messages = _context.Messages
+        .Where(m => m.FriendShipId == FriendShipId)
         .OrderByDescending(m => m.CreatedAt)
         .Skip(skip)
         .Take(20)
@@ -91,8 +92,36 @@ public class ChatRepository : IChatRepository
             CreatedAt = m.CreatedAt
         }).ToList();
 
+
         return messages;
 
     }
+
+    public async Task<List<AllMessagesVm>> GetAllMessages(string userId)
+    {
+        var FriendShips = await _context.FriendShips
+        .Where(fs => fs.UserId1 == userId || fs.UserId2 == userId )
+        .Include(fs => fs.Messages)
+        .ToListAsync();
+
+
+        var allMessages = FriendShips.Select(fs => new AllMessagesVm
+        {
+            UserId = fs.UserId1 != userId ? fs.UserId1 : fs.UserId2 ,
+            FriendShipId = fs.Id.ToString(),
+            Messages = fs.Messages.Select(m => new GetMessageVm
+            {
+                Id = m.Id,
+                Text = m.message,
+                SenderId = m.SenderId,
+                IsSent = m.SenderId == userId ? true : false,
+                CreatedAt = m.CreatedAt
+            }).ToList()
+        }).ToList();
+
+
+        return allMessages;
+    }
+
 
 }
