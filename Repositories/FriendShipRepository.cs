@@ -11,6 +11,8 @@ public class OperationResult
     public string? ErrorMessage { get; set; }
 
     public string? recieverId { get; set; }
+
+    public string? MessageId {get;set;}
 }
 
 public class FriendId

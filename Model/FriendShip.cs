@@ -13,6 +13,8 @@ public class FriendShip
 
     public User User2 {get;set;}
 
+    public DateTime LatestMessageDate {get;set;} = DateTime.UtcNow;
+
     public ICollection<Message> Messages {get;} = new List<Message>();
 
 }

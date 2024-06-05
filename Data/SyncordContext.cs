@@ -11,6 +11,8 @@ public class SyncordContext : IdentityDbContext<User>
     public SyncordContext(DbContextOptions<SyncordContext> options) : base(options)
     { }
 
+    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 

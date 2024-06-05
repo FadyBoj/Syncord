@@ -34,7 +34,11 @@ namespace Syncord.Controllers
             var recieverId = result.recieverId;
             await _hubContext.Clients.User(recieverId).SendAsync("RecieveMessage", data.Message);
 
-            return Ok("Message sent");
+            return Ok(new {
+                msg = "Message sent successfully",
+                id = result.MessageId,
+                statusCode = 200
+            });
         }
 
         [HttpGet("{friendShipId}")]

@@ -29,10 +29,13 @@ builder.Services.AddDbContext<SyncordContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("Default");
 
     if (connectionString != null)
-        options.UseNpgsql(connectionString);
+        options.UseNpgsql(connectionString,builder =>{
+            builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+        });
 
     options.ConfigureWarnings(warnings =>
     warnings.Ignore(CoreEventId.NavigationBaseIncludeIgnored, CoreEventId.NavigationBaseIncluded));
+
 });
 
 

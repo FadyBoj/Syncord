@@ -49,16 +49,19 @@ public class ChatRepository : IChatRepository
             FriendShipId = friendShip.Id,
             CreatedAt = DateTime.UtcNow
         };
-        Console.WriteLine(newMessage.CreatedAt);
+
+        friendShip.LatestMessageDate =  DateTime.UtcNow;
 
         await _context.Messages.AddAsync(newMessage);
         await _context.SaveChangesAsync();
+
 
         return new OperationResult
         {
             Succeeded = true,
             ErrorMessage = null,
-            recieverId = recieverId
+            recieverId = recieverId,
+            MessageId = newMessage.Id.ToString()
         };
 
 
@@ -100,15 +103,19 @@ public class ChatRepository : IChatRepository
     public async Task<List<AllMessagesVm>> GetAllMessages(string userId)
     {
         var FriendShips = await _context.FriendShips
-        .Where(fs => fs.UserId1 == userId || fs.UserId2 == userId )
-        .Include(fs => fs.Messages)
+        .Where(fs => fs.UserId1 == userId || fs.UserId2 == userId)
+        .Include(fs => fs.Messages.OrderByDescending(m => m.CreatedAt)
+        .Skip(0)
+        .Take(20)
+       )
         .ToListAsync();
 
 
         var allMessages = FriendShips.Select(fs => new AllMessagesVm
         {
-            UserId = fs.UserId1 != userId ? fs.UserId1 : fs.UserId2 ,
+            UserId = fs.UserId1 != userId ? fs.UserId1 : fs.UserId2,
             FriendShipId = fs.Id.ToString(),
+            LatesMessageDate = fs.LatestMessageDate,
             Messages = fs.Messages.Select(m => new GetMessageVm
             {
                 Id = m.Id,
@@ -116,7 +123,7 @@ public class ChatRepository : IChatRepository
                 SenderId = m.SenderId,
                 IsSent = m.SenderId == userId ? true : false,
                 CreatedAt = m.CreatedAt
-            }).ToList()
+            }).Reverse().ToList()
         }).ToList();
 
 
