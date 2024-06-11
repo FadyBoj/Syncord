@@ -32,31 +32,43 @@ namespace Syncord.Controllers
                 return BadRequest(result.ErrorMessage);
 
             var recieverId = result.recieverId;
-            await _hubContext.Clients.User(recieverId).SendAsync("RecieveMessage", data.Message);
+            Console.WriteLine(recieverId);
+            await _hubContext.Clients.User(recieverId).SendAsync("RecieveMessage",
+             new
+             {
+                 text = data.Message,
+                 id = result.MessageId,
+                 createdAt = DateTime.UtcNow,
+                 isSent = false,
+                 senderId = userId
 
-            return Ok(new {
+             });
+
+            return Ok(new
+            {
                 msg = "Message sent successfully",
                 id = result.MessageId,
+                createdAt = DateTime.UtcNow,
                 statusCode = 200
             });
         }
 
         [HttpGet("{friendShipId}")]
         [Authorize]
-        public async Task<ActionResult> GetMessages(int friendShipId,int skip = 0)
+        public async Task<ActionResult> GetMessages(int friendShipId, int skip = 0,int take = 0)
         {
             var userId = HttpContext.User.FindFirst("Id")?.Value;
-            var messages = await _chatRepository.GetMessages(friendShipId, userId,skip);
+            var messages = await _chatRepository.GetMessages(friendShipId, userId, skip,take);
             return Ok(messages);
         }
 
         [HttpGet]
         [Authorize]
         [Route("all-messages")]
-        public async Task<ActionResult> GetAllMessages()
+        public async Task<ActionResult<AllMessagesVm>> GetAllMessages()
         {
             var userId = HttpContext.User.FindFirst("Id")?.Value;
-            var allMessages = await  _chatRepository.GetAllMessages(userId);
+            var allMessages = await _chatRepository.GetAllMessages(userId);
             return Ok(allMessages);
         }
     }

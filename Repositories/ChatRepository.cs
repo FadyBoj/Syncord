@@ -10,7 +10,7 @@ namespace Syncord.Repositories;
 public interface IChatRepository
 {
     Task<OperationResult> SendMessage(int FriendShipId, string message, string userId);
-    Task<IEnumerable<GetMessageVm>> GetMessages(int FriendShipId, string userId, int skip);
+    Task<IEnumerable<GetMessageVm>> GetMessages(int FriendShipId, string userId, int skip,int take);
     Task<List<AllMessagesVm>> GetAllMessages(string userId);
 
 }
@@ -40,7 +40,7 @@ public class ChatRepository : IChatRepository
                 ErrorMessage = "Forbidden"
             };
 
-        var recieverId = friendShip.UserId1 != userId ? friendShip.UserId1 : friendShip.UserId2;
+        var recieverId = friendShip.UserId1.ToString() != userId.ToString() ? friendShip.UserId1 : friendShip.UserId2;
 
         var newMessage = new Message
         {
@@ -67,7 +67,7 @@ public class ChatRepository : IChatRepository
 
     }
 
-    public async Task<IEnumerable<GetMessageVm>> GetMessages(int FriendShipId, string userId, int skip)
+    public async Task<IEnumerable<GetMessageVm>> GetMessages(int FriendShipId, string userId, int skip,int take)
     {
         var friendShip = await _context.FriendShips
         .FirstOrDefaultAsync(fs => fs.Id == FriendShipId);
@@ -84,7 +84,7 @@ public class ChatRepository : IChatRepository
         .Where(m => m.FriendShipId == FriendShipId)
         .OrderByDescending(m => m.CreatedAt)
         .Skip(skip)
-        .Take(20)
+        .Take(take)
         .Reverse()
         .Select(m => new GetMessageVm
         {

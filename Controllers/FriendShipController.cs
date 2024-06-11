@@ -52,7 +52,7 @@ namespace Syncord.Controllers
         [Authorize]
         public async Task<ActionResult> RejectFriendRequest(AcceptsRequestVMm data)
         {
-          
+
             var userId = HttpContext.User.FindFirst("Id")?.Value;
             var result = await _friendShipRepository.RejectFriendReuqest(data.RequestId, userId);
 
@@ -61,6 +61,18 @@ namespace Syncord.Controllers
 
             return Ok("Friend request rejected successfully");
 
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("Search")]
+
+        public async Task<ActionResult<SearchFriendVm>> Search(string search)
+        {
+            var userId = HttpContext.User.FindFirst("Id")?.Value;
+
+            var users = await _friendShipRepository.Search(search, userId);
+            return Ok(users);
         }
 
     }

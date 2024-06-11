@@ -12,12 +12,14 @@ public class OperationResult
 
     public string? recieverId { get; set; }
 
-    public string? MessageId {get;set;}
+    public string? MessageId { get; set; }
+
 }
 
 public class FriendId
 {
     public string Id { get; set; }
+
 }
 
 public interface IFriendShipRepository
@@ -27,6 +29,7 @@ public interface IFriendShipRepository
     Task<OperationResult> RejectFriendReuqest(int requestId, string userId);
     Task<IEnumerable<FriendVm>> GetFriends(string userId);
     Task<List<string>> GetFriendsIds(string userId);
+    public Task<List<SearchFriendVm>> Search(string searchString, string userId);
 }
 
 public class FriendShipRepository : IFriendShipRepository
@@ -187,6 +190,24 @@ public class FriendShipRepository : IFriendShipRepository
         ).ToList();
 
         return friends;
+
+    }
+
+    public async Task<List<SearchFriendVm>> Search(string searchString, string userId)
+    {
+        Console.WriteLine(searchString);
+        var users = await _context.Users.Where(
+        u => u.Email.ToLower().StartsWith(searchString.ToLower()) && u.Id != userId
+            ).Select(u => new SearchFriendVm
+            {
+                Id = u.Id,
+                Firstname = u.Firstname,
+                Lastname = u.Lastname,
+                Email = u.Email,
+                Image = u.Image
+            }).ToListAsync();
+
+        return users;
 
     }
 
