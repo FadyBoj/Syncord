@@ -6,5 +6,5 @@ namespace Syncord.ViewModels;
 public class FriendRequestVm
 {
     [Required]
-    public string recieverId {get;set;}
+    public string recieverEmail {get;set;}
 }

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -24,8 +25,15 @@ namespace Syncord.Controllers
         public async Task<ActionResult> SendFriendRequest(FriendRequestVm data)
         {
             var userId = HttpContext.User.FindFirst("Id")?.Value;
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+            if (data.recieverEmail.ToLower() == userEmail.ToLower())
+                return BadRequest(new
+                {
+                    msg = "Can't send friend request to yourself",
+                    statusCode = 400
+                });
 
-            var result = await _friendShipRepository.SendFriendRequest(userId, data.recieverId);
+            var result = await _friendShipRepository.SendFriendRequest(userId, data.recieverEmail);
             if (!result.Succeeded)
                 return BadRequest(result.ErrorMessage);
 

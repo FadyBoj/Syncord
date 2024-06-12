@@ -24,7 +24,7 @@ public class FriendId
 
 public interface IFriendShipRepository
 {
-    Task<OperationResult> SendFriendRequest(string senderId, string recieverId);
+    Task<OperationResult> SendFriendRequest(string senderId, string recieverEmail);
     Task<OperationResult> AcceptFriendReuqest(int requestId, string userId);
     Task<OperationResult> RejectFriendReuqest(int requestId, string userId);
     Task<IEnumerable<FriendVm>> GetFriends(string userId);
@@ -41,8 +41,49 @@ public class FriendShipRepository : IFriendShipRepository
         _context = context;
     }
 
-    public async Task<OperationResult> SendFriendRequest(string senderId, string recieverId)
+    public async Task<OperationResult> SendFriendRequest(string senderId, string recieverEmail)
     {
+        var recieverUser = await _context.Users.
+        Include(u => u.FriendShips)
+        .ThenInclude(fs => fs.User1)
+        .Include(u => u.FriendShips)
+         .ThenInclude(fs => fs.User2)
+         .Include(u => u.FriendShipsHolder)
+        .ThenInclude(fs => fs.User1)
+        .Include(u => u.FriendShipsHolder)
+         .ThenInclude(fs => fs.User2)
+        .FirstOrDefaultAsync(u => u.Email.ToLower() == recieverEmail.ToLower());
+        var recieverId = recieverUser.Id.ToString();
+        Console.WriteLine(recieverId);
+
+        List<string> friendsIds1 = new List<string>();
+        List<string> friendsIds2 = new List<string>();
+
+        foreach (var item in recieverUser.FriendShips)
+        {
+            friendsIds1.Add(item.UserId1 != recieverId ? item.UserId1 : item.UserId2);
+        }
+
+        foreach (var item in recieverUser.FriendShipsHolder)
+        {
+            friendsIds2.Add(item.UserId1 != recieverId ? item.UserId1 : item.UserId2);
+        }
+
+        if (friendsIds1.Contains(senderId) || friendsIds2.Contains(senderId))
+            return new OperationResult
+            {
+                Succeeded = false,
+                ErrorMessage = "You're already friends with this user"
+            };
+
+
+        if (recieverUser == null)
+            return new OperationResult
+            {
+                Succeeded = false,
+                ErrorMessage = "User doesn't exist"
+            };
+
         var orderResult = StringComparer.OrdinalIgnoreCase.Compare(senderId, recieverId);
         var combinedIds = (orderResult < 0 ? senderId : recieverId).ToString() +
         (orderResult < 0 ? recieverId : senderId).ToString();

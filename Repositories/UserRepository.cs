@@ -44,7 +44,7 @@ public class UserRepository : IUserRepository
     {
         var newUser = new User
         {
-            Email = user.Email,
+            Email = user.Email.ToLower(),
             Firstname = user.Firstname,
             Lastname = user.Lastname,
             UserName = user.Email
