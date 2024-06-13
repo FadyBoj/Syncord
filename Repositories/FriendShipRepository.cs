@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Any;
 using Syncord.Data;
 using Syncord.Models;
 using Syncord.ViewModels;
@@ -13,6 +14,8 @@ public class OperationResult
     public string? recieverId { get; set; }
 
     public string? MessageId { get; set; }
+
+    public SearchFriendVm? User { get; set; }
 
 }
 
@@ -53,8 +56,15 @@ public class FriendShipRepository : IFriendShipRepository
         .Include(u => u.FriendShipsHolder)
          .ThenInclude(fs => fs.User2)
         .FirstOrDefaultAsync(u => u.Email.ToLower() == recieverEmail.ToLower());
+
+        if (recieverUser == null)
+            return new OperationResult
+            {
+                Succeeded = false,
+                ErrorMessage = "User doesn't exist"
+            };
+
         var recieverId = recieverUser.Id.ToString();
-        Console.WriteLine(recieverId);
 
         List<string> friendsIds1 = new List<string>();
         List<string> friendsIds2 = new List<string>();
@@ -77,12 +87,7 @@ public class FriendShipRepository : IFriendShipRepository
             };
 
 
-        if (recieverUser == null)
-            return new OperationResult
-            {
-                Succeeded = false,
-                ErrorMessage = "User doesn't exist"
-            };
+
 
         var orderResult = StringComparer.OrdinalIgnoreCase.Compare(senderId, recieverId);
         var combinedIds = (orderResult < 0 ? senderId : recieverId).ToString() +
@@ -132,7 +137,16 @@ public class FriendShipRepository : IFriendShipRepository
         return new OperationResult
         {
             Succeeded = true,
-            ErrorMessage = null
+            ErrorMessage = null,
+            recieverId = recieverId,
+            User = new SearchFriendVm
+            {
+                Id = recieverUser.Id,
+                Email = recieverUser.Email,
+                Firstname = recieverUser.Firstname,
+                Lastname = recieverUser.Lastname,
+                Image = recieverUser.Image
+            }
         };
     }
 
@@ -236,7 +250,6 @@ public class FriendShipRepository : IFriendShipRepository
 
     public async Task<List<SearchFriendVm>> Search(string searchString, string userId)
     {
-        Console.WriteLine(searchString);
         var users = await _context.Users.Where(
         u => u.Email.ToLower().StartsWith(searchString.ToLower()) && u.Id != userId
             ).Select(u => new SearchFriendVm

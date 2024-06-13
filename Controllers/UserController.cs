@@ -41,7 +41,7 @@ namespace Syncord.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<ActionResult> SayHello(RegisterVm user)
+        public async Task<ActionResult> Register(RegisterVm user)
         {
             var existingUser = await _userRepository.GetUserByEmail(user.Email);
             if (existingUser != null)
