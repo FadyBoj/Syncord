@@ -39,13 +39,13 @@ public class SyncordContext : IdentityDbContext<User>
         .HasOne(fs => fs.User1)
         .WithMany(u => u.FriendShips)
         .HasForeignKey(fs => fs.UserId1)
-        .OnDelete(DeleteBehavior.Restrict);
+        .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<FriendShip>()
         .HasOne(fs => fs.User2)
         .WithMany(u => u.FriendShipsHolder)
         .HasForeignKey(fs => fs.UserId2)
-        .OnDelete(DeleteBehavior.Restrict);
+        .OnDelete(DeleteBehavior.Cascade);
 
         //Configure Message relations
 
@@ -53,13 +53,13 @@ public class SyncordContext : IdentityDbContext<User>
         .HasOne(m => m.FriendShip)
         .WithMany(fs => fs.Messages)
         .HasForeignKey(m => m.FriendShipId)
-        .OnDelete(DeleteBehavior.Restrict);
+        .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Message>()
         .HasOne(m => m.Sender)
         .WithMany()
         .HasForeignKey(m => m.SenderId)
-        .OnDelete(DeleteBehavior.Restrict);
+        .OnDelete(DeleteBehavior.Cascade);
 
 
 

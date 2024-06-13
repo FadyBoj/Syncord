@@ -128,7 +128,8 @@ public class FriendShipRepository : IFriendShipRepository
         {
             SenderId = sender.Id,
             RecieverId = reciever.Id,
-            CombinedIds = combinedIds
+            CombinedIds = combinedIds,
+            CreatedAt = DateTime.UtcNow
         };
 
         await _context.friendRequests.AddAsync(newFriendRequest);

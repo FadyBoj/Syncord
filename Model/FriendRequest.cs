@@ -21,4 +21,6 @@ public class FriendRequest
 
     public string CombinedIds {get;set;} 
 
+    public DateTime CreatedAt {get;set;}
+
 }
