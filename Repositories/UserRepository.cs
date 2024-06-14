@@ -160,6 +160,9 @@ public class UserRepository : IUserRepository
             Id = rf.Id,
             UserId = rf.SenderId,
             Email = rf.Sender.Email,
+            Firstname = rf.Sender.Firstname,
+            Lastname = rf.Sender.Lastname,
+            Image = rf.Sender.Image,
             OutGoing = false
         });
 
@@ -168,6 +171,9 @@ public class UserRepository : IUserRepository
             Id = rf.Id,
             UserId = rf.RecieverId,
             Email = rf.Reciever.Email,
+            Firstname = rf.Reciever.Firstname,
+            Lastname = rf.Reciever.Lastname,
+            Image = rf.Reciever.Image,
             OutGoing = true
         });
 
