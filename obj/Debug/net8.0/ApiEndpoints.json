@@ -32,9 +32,34 @@
         "Name": "skip",
         "Type": "System.Int32",
         "IsRequired": false
+      },
+      {
+        "Name": "take",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Syncord.Controllers.ChatController",
+    "Method": "GetAllMessages",
+    "RelativePath": "Chat/all-messages",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Syncord.ViewModels.AllMessagesVm",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "Syncord.Controllers.FriendShipController",
@@ -70,6 +95,32 @@
   },
   {
     "ContainingType": "Syncord.Controllers.FriendShipController",
+    "Method": "Search",
+    "RelativePath": "FriendShip/Search",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Syncord.ViewModels.SearchFriendVm",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Syncord.Controllers.FriendShipController",
     "Method": "SendFriendRequest",
     "RelativePath": "FriendShip/Send-request",
     "HttpMethod": "POST",
@@ -86,12 +137,69 @@
   },
   {
     "ContainingType": "Syncord.Controllers.UserController",
+    "Method": "CheckUserExist",
+    "RelativePath": "User/check-user-exist",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data",
+        "Type": "Syncord.ViewModels.CheckExistVm",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Syncord.Controllers.UserController",
+    "Method": "Dashboard",
+    "RelativePath": "User/dashboard",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Syncord.ViewModels.DashboardVm",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Syncord.Controllers.UserController",
     "Method": "Friends",
     "RelativePath": "User/Friends",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Syncord.Controllers.UserController",
+    "Method": "Image",
+    "RelativePath": "User/image",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Image",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "hi",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -112,7 +220,7 @@
   },
   {
     "ContainingType": "Syncord.Controllers.UserController",
-    "Method": "SayHello",
+    "Method": "Register",
     "RelativePath": "User/register",
     "HttpMethod": "POST",
     "IsController": true,

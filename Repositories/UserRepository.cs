@@ -163,7 +163,9 @@ public class UserRepository : IUserRepository
             Firstname = rf.Sender.Firstname,
             Lastname = rf.Sender.Lastname,
             Image = rf.Sender.Image,
-            OutGoing = false
+            OutGoing = false,
+            CreatedAt = rf.CreatedAt
+
         });
 
         var sentRequests = user.SentFriendRequests.Select(rf => new GetRequestVm
@@ -174,7 +176,8 @@ public class UserRepository : IUserRepository
             Firstname = rf.Reciever.Firstname,
             Lastname = rf.Reciever.Lastname,
             Image = rf.Reciever.Image,
-            OutGoing = true
+            OutGoing = true,
+            CreatedAt = rf.CreatedAt
         });
 
         var dashboard = new DashboardVm

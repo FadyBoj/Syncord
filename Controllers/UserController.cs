@@ -177,16 +177,24 @@ namespace Syncord.Controllers
                 uploadResult = await _cloudinary.UploadAsync(uploadParams);
             }
 
-            if(uploadResult.StatusCode != HttpStatusCode.OK)
-            return StatusCode(500,new {msg="Something went wrong",statusCode=500});
+            if (uploadResult.StatusCode != HttpStatusCode.OK)
+                return StatusCode(500, new { msg = "Something went wrong", statusCode = 500 });
 
-            var result = await _userRepository.UploadProfilePicture(userId,uploadResult.Url.ToString());
+            var result = await _userRepository.UploadProfilePicture(userId, uploadResult.Url.ToString());
 
-            if(!result.Succeeded)
-            return  StatusCode(500,new {msg=result.ErrorMessage,statusCode=500});
+            if (!result.Succeeded)
+                return StatusCode(500, new { msg = result.ErrorMessage, statusCode = 500 });
 
-            return Ok(new {msg="Profile picture updated successfully",StatusCode=200});
+            return Ok(new { msg = "Profile picture updated successfully", StatusCode = 200 });
+        }
+
+        [HttpGet]
+        [Route("ping")]
+        public async Task<ActionResult> SelfPing()
+        {
+            return Ok("Ping");
         }
 
     }
+
 }
