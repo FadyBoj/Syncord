@@ -17,7 +17,7 @@ namespace Syncord.Controllers
         private readonly IFriendShipRepository _friendShipRepository;
         private readonly IHubContext<MsgHub> _hubContext;
 
-        public FriendShipController(IFriendShipRepository friendShipRepository,IHubContext<MsgHub> hubContext)
+        public FriendShipController(IFriendShipRepository friendShipRepository, IHubContext<MsgHub> hubContext)
         {
             _friendShipRepository = friendShipRepository;
             _hubContext = hubContext;
@@ -36,8 +36,8 @@ namespace Syncord.Controllers
             var result = await _friendShipRepository.SendFriendRequest(userId, data.recieverEmail);
             if (!result.Succeeded)
                 return BadRequest(result.ErrorMessage);
-            
-            await _hubContext.Clients.User(result.recieverId).SendAsync("SentRequest",result.User);
+
+            await _hubContext.Clients.User(result.recieverId).SendAsync("SentRequest", result.User);
 
             return Ok("Success");
         }
@@ -52,6 +52,12 @@ namespace Syncord.Controllers
 
             if (!result.Succeeded)
                 return BadRequest(result.ErrorMessage);
+
+            Console.WriteLine(result.User.Email);
+            Console.WriteLine(result.User.Id);
+
+            //Sending a singnal to the sender that the request has been accepted
+            await _hubContext.Clients.User(result.SenderId).SendAsync("RequestAccepted", result.User);
 
             return Ok("Friend request accepted successfully");
 

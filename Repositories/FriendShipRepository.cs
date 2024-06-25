@@ -12,6 +12,7 @@ public class OperationResult
     public string? ErrorMessage { get; set; }
 
     public string? recieverId { get; set; }
+    public string? SenderId { get; set; }
 
     public string? MessageId { get; set; }
 
@@ -154,6 +155,7 @@ public class FriendShipRepository : IFriendShipRepository
     public async Task<OperationResult> AcceptFriendReuqest(int requestId, string userId)
     {
         var existingFriendRequest = await _context.friendRequests
+        .Include(fr => fr.Reciever)
         .FirstOrDefaultAsync(fr => fr.Id == requestId && fr.RecieverId == userId);
 
         if (existingFriendRequest == null)
@@ -181,7 +183,17 @@ public class FriendShipRepository : IFriendShipRepository
         return new OperationResult
         {
             Succeeded = true,
-            ErrorMessage = "Friend request accepted successfully"
+            ErrorMessage = "Friend request accepted successfully",
+            User = new SearchFriendVm
+            {
+                Id = existingFriendRequest.Reciever.Id,
+                Email = existingFriendRequest.Reciever.Email,
+                Firstname = existingFriendRequest.Reciever.Firstname,
+                Lastname = existingFriendRequest.Reciever.Lastname,
+                Image = existingFriendRequest.Reciever.Image,
+
+            },
+            SenderId = senderId
         };
     }
 

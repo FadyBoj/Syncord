@@ -10,7 +10,6 @@ C:\PC\Projects\Syncord\obj\Debug\net8.0\Syncord.dll
 C:\PC\Projects\Syncord\obj\Debug\net8.0\refint\Syncord.dll
 C:\PC\Projects\Syncord\obj\Debug\net8.0\Syncord.pdb
 C:\PC\Projects\Syncord\bin\Debug\net8.0\appsettings.Development.json
-C:\PC\Projects\Syncord\bin\Debug\net8.0\appsettings.json
 C:\PC\Projects\Syncord\bin\Debug\net8.0\libman.json
 C:\PC\Projects\Syncord\bin\Debug\net8.0\Syncord.staticwebassets.runtime.json
 C:\PC\Projects\Syncord\bin\Debug\net8.0\Syncord.exe
@@ -146,3 +145,4 @@ C:\PC\Projects\Syncord\obj\Debug\net8.0\scopedcss\bundle\Syncord.styles.css
 C:\PC\Projects\Syncord\obj\Debug\net8.0\Syncord.csproj.Up2Date
 C:\PC\Projects\Syncord\obj\Debug\net8.0\Syncord.genruntimeconfig.cache
 C:\PC\Projects\Syncord\obj\Debug\net8.0\ref\Syncord.dll
+C:\PC\Projects\Syncord\bin\Debug\net8.0\appsettings.json
