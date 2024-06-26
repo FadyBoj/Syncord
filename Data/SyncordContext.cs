@@ -11,8 +11,6 @@ public class SyncordContext : IdentityDbContext<User>
     public SyncordContext(DbContextOptions<SyncordContext> options) : base(options)
     { }
 
-    
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
@@ -60,9 +58,6 @@ public class SyncordContext : IdentityDbContext<User>
         .WithMany()
         .HasForeignKey(m => m.SenderId)
         .OnDelete(DeleteBehavior.Cascade);
-
-
-
     }
 
 

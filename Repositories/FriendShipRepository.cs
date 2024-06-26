@@ -17,6 +17,10 @@ public class OperationResult
     public string? MessageId { get; set; }
 
     public SearchFriendVm? User { get; set; }
+    public SearchFriendVm? Reciever { get; set; }
+    public SearchFriendVm? Sender { get; set; }
+
+
 
 }
 
@@ -156,6 +160,7 @@ public class FriendShipRepository : IFriendShipRepository
     {
         var existingFriendRequest = await _context.friendRequests
         .Include(fr => fr.Reciever)
+        .Include(fr => fr.Sender)
         .FirstOrDefaultAsync(fr => fr.Id == requestId && fr.RecieverId == userId);
 
         if (existingFriendRequest == null)
@@ -184,15 +189,27 @@ public class FriendShipRepository : IFriendShipRepository
         {
             Succeeded = true,
             ErrorMessage = "Friend request accepted successfully",
-            User = new SearchFriendVm
+            Reciever = new SearchFriendVm
             {
                 Id = existingFriendRequest.Reciever.Id,
                 Email = existingFriendRequest.Reciever.Email,
                 Firstname = existingFriendRequest.Reciever.Firstname,
                 Lastname = existingFriendRequest.Reciever.Lastname,
                 Image = existingFriendRequest.Reciever.Image,
-
+                FriendShipId = existingFriendRequest.Id.ToString(),
+                IsOnline = existingFriendRequest.Reciever.IsOnline
             },
+            Sender = new SearchFriendVm
+            {
+                Id = existingFriendRequest.Sender.Id,
+                Email = existingFriendRequest.Sender.Email,
+                Firstname = existingFriendRequest.Sender.Firstname,
+                Lastname = existingFriendRequest.Sender.Lastname,
+                Image = existingFriendRequest.Sender.Image,
+                FriendShipId = existingFriendRequest.Id.ToString(),
+                IsOnline = existingFriendRequest.Sender.IsOnline
+            },
+
             SenderId = senderId
         };
     }

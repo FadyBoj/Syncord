@@ -34,7 +34,7 @@ namespace Syncord.Controllers
                 return BadRequest("Can't send friend request to yourself");
 
             var result = await _friendShipRepository.SendFriendRequest(userId, data.recieverEmail);
-            if (!result.Succeeded)
+            if (!result.Succeeded || result.recieverId == null)
                 return BadRequest(result.ErrorMessage);
 
             await _hubContext.Clients.User(result.recieverId).SendAsync("SentRequest", result.User);
@@ -53,13 +53,10 @@ namespace Syncord.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.ErrorMessage);
 
-            Console.WriteLine(result.User.Email);
-            Console.WriteLine(result.User.Id);
-
             //Sending a singnal to the sender that the request has been accepted
-            await _hubContext.Clients.User(result.SenderId).SendAsync("RequestAccepted", result.User);
+            await _hubContext.Clients.User(result.SenderId).SendAsync("RequestAccepted", result.Reciever);
 
-            return Ok("Friend request accepted successfully");
+            return Ok(result.Sender);
 
         }
 
