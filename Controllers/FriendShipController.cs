@@ -37,7 +37,7 @@ namespace Syncord.Controllers
             if (!result.Succeeded || result.recieverId == null)
                 return BadRequest(result.ErrorMessage);
 
-            await _hubContext.Clients.User(result.recieverId).SendAsync("SentRequest", result.User);
+            await _hubContext.Clients.User(result.recieverId).SendAsync("SentRequest", result.Request);
 
             return Ok("Success");
         }

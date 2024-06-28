@@ -13,15 +13,11 @@ public class OperationResult
 
     public string? recieverId { get; set; }
     public string? SenderId { get; set; }
-
     public string? MessageId { get; set; }
-
     public SearchFriendVm? User { get; set; }
     public SearchFriendVm? Reciever { get; set; }
     public SearchFriendVm? Sender { get; set; }
-
-
-
+    public GetRequestVm? Request { get; set; }
 }
 
 public class FriendId
@@ -145,13 +141,16 @@ public class FriendShipRepository : IFriendShipRepository
             Succeeded = true,
             ErrorMessage = null,
             recieverId = recieverId,
-            User = new SearchFriendVm
+            Request = new GetRequestVm
             {
-                Id = recieverUser.Id,
-                Email = recieverUser.Email,
-                Firstname = recieverUser.Firstname,
-                Lastname = recieverUser.Lastname,
-                Image = recieverUser.Image
+                Id = newFriendRequest.Id,
+                UserId = sender.Id,
+                OutGoing = false,
+                Image = sender.Image,
+                Email = sender.Email,
+                Firstname = sender.Firstname,
+                Lastname = sender.Lastname,
+                CreatedAt = DateTime.UtcNow
             }
         };
     }
