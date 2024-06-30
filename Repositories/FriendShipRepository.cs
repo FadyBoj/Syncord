@@ -18,13 +18,12 @@ public class OperationResult
     public SearchFriendVm? Reciever { get; set; }
     public SearchFriendVm? Sender { get; set; }
     public GetRequestVm? Request { get; set; }
+    public GetRequestVm? ReceiverRequest { get; set; }
+    public string? RequestId { get; set; }
+    public string? UserId { get; set; }
 }
 
-public class FriendId
-{
-    public string Id { get; set; }
 
-}
 
 public interface IFriendShipRepository
 {
@@ -151,6 +150,17 @@ public class FriendShipRepository : IFriendShipRepository
                 Firstname = sender.Firstname,
                 Lastname = sender.Lastname,
                 CreatedAt = DateTime.UtcNow
+            },
+            ReceiverRequest = new GetRequestVm
+            {
+                Id = newFriendRequest.Id,
+                UserId = reciever.Id,
+                OutGoing = true,
+                Image = reciever.Image,
+                Email = reciever.Email,
+                Firstname = reciever.Firstname,
+                Lastname = reciever.Lastname,
+                CreatedAt = DateTime.UtcNow
             }
         };
     }
@@ -216,7 +226,9 @@ public class FriendShipRepository : IFriendShipRepository
     public async Task<OperationResult> RejectFriendReuqest(int requestId, string userId)
     {
         var existingFriendRequest = await _context.friendRequests
-                .FirstOrDefaultAsync(fr => fr.Id == requestId && fr.RecieverId == userId);
+                .FirstOrDefaultAsync(
+                    fr => fr.Id == requestId && (fr.RecieverId == userId || fr.SenderId == userId)
+                    );
 
         if (existingFriendRequest == null)
             return new OperationResult
@@ -228,10 +240,14 @@ public class FriendShipRepository : IFriendShipRepository
         _context.friendRequests.Remove(existingFriendRequest);
         await _context.SaveChangesAsync();
 
+        var UserId = existingFriendRequest.SenderId != userId ? existingFriendRequest.SenderId : existingFriendRequest.RecieverId;
+
         return new OperationResult
         {
             Succeeded = true,
-            ErrorMessage = null
+            ErrorMessage = null,
+            RequestId = existingFriendRequest.Id.ToString(),
+            UserId = UserId
         };
     }
 
@@ -242,7 +258,6 @@ public class FriendShipRepository : IFriendShipRepository
         .Include(fs => fs.User2)
         .Where(fs => fs.UserId1 == userId || fs.UserId2 == userId)
         .ToListAsync();
-
 
         var friends = friendShips.Select(fs => new FriendVm
         {

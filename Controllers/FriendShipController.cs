@@ -39,7 +39,7 @@ namespace Syncord.Controllers
 
             await _hubContext.Clients.User(result.recieverId).SendAsync("SentRequest", result.Request);
 
-            return Ok("Success");
+            return Ok(result.ReceiverRequest);
         }
 
         [HttpPost]
@@ -71,6 +71,8 @@ namespace Syncord.Controllers
 
             if (!result.Succeeded)
                 return BadRequest(result.ErrorMessage);
+
+            await _hubContext.Clients.User(result.UserId).SendAsync("RequestRejected", result.RequestId);
 
             return Ok("Friend request rejected successfully");
 
