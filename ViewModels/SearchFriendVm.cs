@@ -15,4 +15,6 @@ public class SearchFriendVm
     public bool? IsOnline {get;set;}
 
     public string? FriendShipId {get;set;}
+    
+    public string? RequestId {get;set;}
 }
