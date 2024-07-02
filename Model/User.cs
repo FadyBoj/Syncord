@@ -21,9 +21,11 @@ public class User : IdentityUser
     [Required, MinLength(8)]
     public override string? PasswordHash { get; set; }
 
-    public string? Image {get;set;} = null;
+    public string? Image { get; set; } = null;
 
     public bool IsOnline { get; set; } = false;
+
+    public DateTime CreatedAt { get; set; }
 
     public ICollection<FriendRequest> SentFriendRequests { get; } = new List<FriendRequest>();
     public ICollection<FriendRequest> RecievedFriendRequests { get; } = new List<FriendRequest>();

@@ -47,7 +47,8 @@ public class UserRepository : IUserRepository
             Email = user.Email.ToLower(),
             Firstname = user.Firstname,
             Lastname = user.Lastname,
-            UserName = user.Email
+            UserName = user.Email,
+            CreatedAt = DateTime.UtcNow
         };
 
         var result = await _userManager.CreateAsync(newUser, user.Password);
