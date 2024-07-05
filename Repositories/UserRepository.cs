@@ -121,10 +121,14 @@ public class UserRepository : IUserRepository
              .ThenInclude(fs => fs.User1)
         .Include(u => u.FriendShips)
             .ThenInclude(fs => fs.User2)
+        .Include(u => u.FriendShips)
+             .ThenInclude(fs => fs.Messages.OrderByDescending(m => m.CreatedAt).Take(1))
         .Include(u => u.FriendShipsHolder)
              .ThenInclude(fs => fs.User1)
         .Include(fs => fs.FriendShipsHolder)
              .ThenInclude(fs => fs.User2)
+        .Include(fs => fs.FriendShipsHolder)
+             .ThenInclude(fs => fs.Messages.OrderByDescending(m => m.CreatedAt).Take(1))
         .Include(u => u.SentFriendRequests)
             .ThenInclude(sf => sf.Reciever)
         .Include(u => u.RecievedFriendRequests)
@@ -132,6 +136,9 @@ public class UserRepository : IUserRepository
         .FirstOrDefaultAsync();
 
         //Formating friends
+        var latestMessage = user.FriendShips.Select(fs => fs.Messages.FirstOrDefault()).FirstOrDefault();
+        var latestMessageHolder = user.FriendShipsHolder.Select(fs => fs.Messages.FirstOrDefault()).FirstOrDefault();
+
         var friends = user.FriendShips.Select(fs => new FriendVm
         {
             FriendShipId = fs.Id.ToString(),
@@ -141,6 +148,13 @@ public class UserRepository : IUserRepository
             Lastname = fs.UserId1 != id ? fs.User1.Lastname : fs.User2.Lastname,
             Image = fs.UserId1 != id ? fs.User1.Image : fs.User2.Image,
             IsOnline = fs.UserId1 != id ? fs.User1.IsOnline : fs.User2.IsOnline,
+            latestMessage =  new GetMessageVm
+            {
+                Id = latestMessage.Id,
+                Text = latestMessage.message,
+                SenderId = latestMessage.SenderId,
+                CreatedAt = latestMessage.CreatedAt
+            }
         }).ToList();
 
         var friendsHolder = user.FriendShipsHolder.Select(fs => new FriendVm
@@ -152,7 +166,15 @@ public class UserRepository : IUserRepository
             Lastname = fs.UserId1 != id ? fs.User1.Lastname : fs.User2.Lastname,
             Image = fs.UserId1 != id ? fs.User1.Image : fs.User2.Image,
             IsOnline = fs.UserId1 != id ? fs.User1.IsOnline : fs.User2.IsOnline,
+            latestMessage =  new GetMessageVm
+            {
+                Id = latestMessageHolder.Id,
+                Text = latestMessageHolder.message,
+                SenderId = latestMessageHolder.SenderId,
+                CreatedAt = latestMessageHolder.CreatedAt
+            }
         }).ToList();
+
 
         //Formating requests
 
@@ -187,9 +209,10 @@ public class UserRepository : IUserRepository
             Email = user.Email,
             Firstname = user.Firstname,
             Lastname = user.Lastname,
+            CreatedAt = user.CreatedAt,
             Image = user.Image,
             Requests = recievedRequests.Concat(sentRequests).ToList(),
-            Friends = friends.Concat(friendsHolder).ToList()
+            Friends = friends.Concat(friendsHolder).ToList(),
         };
 
         return dashboard;

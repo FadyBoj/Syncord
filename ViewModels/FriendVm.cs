@@ -10,5 +10,6 @@ public class FriendVm
     public string Lastname { get; set; }
     public string Image { get; set; }
     public bool IsOnline { get; set; }
+    public GetMessageVm? latestMessage { get; set; }
 
 }

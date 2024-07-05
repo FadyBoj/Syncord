@@ -25,7 +25,7 @@ public class User : IdentityUser
 
     public bool IsOnline { get; set; } = false;
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public ICollection<FriendRequest> SentFriendRequests { get; } = new List<FriendRequest>();
     public ICollection<FriendRequest> RecievedFriendRequests { get; } = new List<FriendRequest>();
