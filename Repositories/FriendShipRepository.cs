@@ -207,7 +207,9 @@ public class FriendShipRepository : IFriendShipRepository
                 Image = existingFriendRequest.Reciever.Image,
                 FriendShipId = newFriendShip.Id.ToString(),
                 IsOnline = existingFriendRequest.Reciever.IsOnline,
-                RequestId = existingFriendRequest.Id.ToString()
+                RequestId = existingFriendRequest.Id.ToString(),
+                CreatedAt = existingFriendRequest.Reciever.CreatedAt
+
 
             },
             Sender = new SearchFriendVm
@@ -219,7 +221,9 @@ public class FriendShipRepository : IFriendShipRepository
                 Image = existingFriendRequest.Sender.Image,
                 FriendShipId = newFriendShip.Id.ToString(),
                 IsOnline = existingFriendRequest.Sender.IsOnline,
-                RequestId = existingFriendRequest.Id.ToString()
+                RequestId = existingFriendRequest.Id.ToString(),
+                CreatedAt = existingFriendRequest.Sender.CreatedAt
+
             },
             SenderId = senderId,
         };

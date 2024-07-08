@@ -147,7 +147,7 @@ public class UserRepository : IUserRepository
             Image = fs.UserId1 != id ? fs.User1.Image : fs.User2.Image,
             IsOnline = fs.UserId1 != id ? fs.User1.IsOnline : fs.User2.IsOnline,
             CreatedAt = fs.UserId1 != id ? fs.User1.CreatedAt : fs.User2.CreatedAt,
-            latestMessage = new GetMessageVm
+            latestMessage = latestMessage == null ? null : new GetMessageVm
             {
                 Id = latestMessage.Id,
                 Text = latestMessage.message,
@@ -166,7 +166,7 @@ public class UserRepository : IUserRepository
             Image = fs.UserId1 != id ? fs.User1.Image : fs.User2.Image,
             IsOnline = fs.UserId1 != id ? fs.User1.IsOnline : fs.User2.IsOnline,
             CreatedAt = fs.UserId1 != id ? fs.User1.CreatedAt : fs.User2.CreatedAt,
-            latestMessage = new GetMessageVm
+            latestMessage = latestMessageHolder == null ? null : new GetMessageVm
             {
                 Id = latestMessageHolder.Id,
                 Text = latestMessageHolder.message,

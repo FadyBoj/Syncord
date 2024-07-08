@@ -12,9 +12,11 @@ public class SearchFriendVm
 
     public string Image { get; set; }
 
-    public bool? IsOnline {get;set;}
+    public bool? IsOnline { get; set; }
 
-    public string? FriendShipId {get;set;}
-    
-    public string? RequestId {get;set;}
+    public string? FriendShipId { get; set; }
+
+    public string? RequestId { get; set; }
+
+    public DateTime? CreatedAt { get; set; }
 }
