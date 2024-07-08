@@ -7,7 +7,7 @@ public class GetMessageVm
 
     public string SenderId {get;set;}
 
-    public bool IsSent {get;set;}
+    public bool? IsSent {get;set;}
 
     public DateTime CreatedAt {get;set;}
 }
