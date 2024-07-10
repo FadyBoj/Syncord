@@ -32,7 +32,10 @@ public interface IFriendShipRepository
     Task<OperationResult> RejectFriendReuqest(int requestId, string userId);
     Task<IEnumerable<FriendVm>> GetFriends(string userId);
     Task<List<string>> GetFriendsIds(string userId);
-    public Task<List<SearchFriendVm>> Search(string searchString, string userId);
+    Task<List<SearchFriendVm>> Search(string searchString, string userId);
+
+    Task<bool> DeleteFriend(FriendShip friendShip);
+
 }
 
 public class FriendShipRepository : IFriendShipRepository
@@ -313,6 +316,14 @@ public class FriendShipRepository : IFriendShipRepository
 
         return users;
 
+    }
+
+    //Handle deleting friend 
+    public async Task<bool> DeleteFriend(FriendShip friendShip)
+    {
+        _context.FriendShips.Remove(friendShip);
+        await _context.SaveChangesAsync();
+        return true;
     }
 
 }

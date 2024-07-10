@@ -2,7 +2,9 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Syncord.Data;
 using Syncord.Hubs;
 using Syncord.Models;
 using Syncord.Repositories;
@@ -16,11 +18,15 @@ namespace Syncord.Controllers
     {
         private readonly IFriendShipRepository _friendShipRepository;
         private readonly IHubContext<MsgHub> _hubContext;
+        private readonly SyncordContext _context;
 
-        public FriendShipController(IFriendShipRepository friendShipRepository, IHubContext<MsgHub> hubContext)
+        public FriendShipController(IFriendShipRepository friendShipRepository, IHubContext<MsgHub> hubContext,
+        SyncordContext context
+        )
         {
             _friendShipRepository = friendShipRepository;
             _hubContext = hubContext;
+            _context = context;
         }
 
         [HttpPost]
@@ -81,13 +87,46 @@ namespace Syncord.Controllers
         [HttpGet]
         [Authorize]
         [Route("Search")]
-
         public async Task<ActionResult<SearchFriendVm>> Search(string search)
         {
             var userId = HttpContext.User.FindFirst("Id")?.Value;
 
             var users = await _friendShipRepository.Search(search, userId);
             return Ok(users);
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("delete-friend")]
+        public async Task<ActionResult<bool>> DeleteFriend(DeleteFriendVm data)
+        {
+            var userId = HttpContext.User.FindFirst("Id")?.Value;
+            var friendShip = await _context.FriendShips.FirstOrDefaultAsync(fs => fs.Id.ToString() == data.FriendShipId);
+            if (friendShip == null)
+                return BadRequest(
+                    new
+                    {
+                        msg = "Friend ship doens't exist",
+                        statusCode = 400
+                    }
+                );
+            if (friendShip.UserId1 != userId && friendShip.UserId2 != userId)
+                return StatusCode(403,
+                    new
+                    {
+                        msg = "Can't delete friendship",
+                        statusCode = 403
+                    });
+
+            await _friendShipRepository.DeleteFriend(friendShip);
+
+            return Ok(
+                    new
+                    {
+                        msg = "Friendship deleted successfully",
+                        statusCode = 200
+                    }
+            );
         }
 
     }
