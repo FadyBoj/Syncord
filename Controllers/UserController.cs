@@ -7,7 +7,9 @@ using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
+using Syncord.Hubs;
 using Syncord.Models;
 using Syncord.Repositories;
 using Syncord.ViewModels;
@@ -24,12 +26,13 @@ namespace Syncord.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IFriendShipRepository _friendShipRepository;
         private readonly Cloudinary _cloudinary;
+        private readonly IHubContext<MsgHub> _hubContext;
 
 
 
         public UserController(IUserRepository userRepository, SignInManager<User> signinManager,
         IConfiguration config, UserManager<User> userManager, IFriendShipRepository friendShipRepository,
-        Cloudinary cloudinary)
+        Cloudinary cloudinary, IHubContext<MsgHub> hubContext)
         {
             _userRepository = userRepository;
             _signinManager = signinManager;
@@ -37,6 +40,7 @@ namespace Syncord.Controllers
             _userManager = userManager;
             _friendShipRepository = friendShipRepository;
             _cloudinary = cloudinary;
+            _hubContext = hubContext;
         }
 
         [HttpPost]
@@ -161,7 +165,7 @@ namespace Syncord.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("image")]
+        [Route("upload-image")]
         public async Task<ActionResult> Image(UploadImageVm data)
         {
             var userId = HttpContext.User.FindFirst("Id")?.Value;
@@ -184,6 +188,13 @@ namespace Syncord.Controllers
 
             if (!result.Succeeded)
                 return StatusCode(500, new { msg = result.ErrorMessage, statusCode = 500 });
+
+            var friendsIds = await _friendShipRepository.GetFriendsIds(userId);
+            await _hubContext.Clients.Users(friendsIds).SendAsync("FriendImageUpdated", new
+            {
+                friendId = userId,
+                imageUrl = uploadResult.Url
+            });
 
             return Ok(new { msg = "Profile picture updated successfully", StatusCode = 200 });
         }

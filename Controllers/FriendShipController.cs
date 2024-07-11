@@ -118,7 +118,21 @@ namespace Syncord.Controllers
                         statusCode = 403
                     });
 
-            await _friendShipRepository.DeleteFriend(friendShip);
+            try
+            {
+                var receiverUserId = friendShip.UserId1 != userId ? friendShip.UserId1 : friendShip.UserId2;
+                await _friendShipRepository.DeleteFriend(friendShip);
+                await _hubContext.Clients.User(receiverUserId).SendAsync("friendshipDeleted", friendShip.Id);
+            }
+            catch (Exception err)
+            {
+                return StatusCode(500, new
+                {
+                    msg = "Something went wrong",
+                    statusCode = 500
+                });
+            }
+
 
             return Ok(
                     new

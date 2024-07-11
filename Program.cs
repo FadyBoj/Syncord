@@ -90,11 +90,11 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IFriendShipRepository, FriendShipRepository>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
 
-builder.Services.AddHttpClient<SelfPing>(client =>
-{
-    client.BaseAddress = new Uri("https://localhost:5001/");
-});
-builder.Services.AddHostedService<SelfPing>();
+// builder.Services.AddHttpClient<SelfPing>(client =>
+// {
+//     client.BaseAddress = new Uri("https://localhost:5001/");
+// });
+// builder.Services.AddHostedService<SelfPing>();
 
 //Configure cloudinary 
 var cloudinaryKey = builder.Configuration["Cloudinary:Key"];

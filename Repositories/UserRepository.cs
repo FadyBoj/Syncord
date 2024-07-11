@@ -230,7 +230,7 @@ public class UserRepository : IUserRepository
             };
 
         user.Image = image;
-        _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
         return new OperationResult
         {
