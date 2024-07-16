@@ -147,13 +147,14 @@ public class UserRepository : IUserRepository
             Image = fs.UserId1 != id ? fs.User1.Image : fs.User2.Image,
             IsOnline = fs.UserId1 != id ? fs.User1.IsOnline : fs.User2.IsOnline,
             CreatedAt = fs.UserId1 != id ? fs.User1.CreatedAt : fs.User2.CreatedAt,
-            latestMessage = latestMessage == null ? null : new GetMessageVm
-            {
-                Id = latestMessage.Id,
-                Text = latestMessage.message,
-                SenderId = latestMessage.SenderId,
-                CreatedAt = latestMessage.CreatedAt
-            }
+            latestMessage = fs.Messages.FirstOrDefault() != null ?
+            new GetMessageVm {
+                Id = fs.Messages.FirstOrDefault().Id,
+                Text = fs.Messages.FirstOrDefault().message,
+                SenderId = fs.Messages.FirstOrDefault().SenderId,
+                CreatedAt = fs.Messages.FirstOrDefault().CreatedAt
+            } : null
+            
         }).ToList();
 
         var friendsHolder = user.FriendShipsHolder.Select(fs => new FriendVm
@@ -166,13 +167,13 @@ public class UserRepository : IUserRepository
             Image = fs.UserId1 != id ? fs.User1.Image : fs.User2.Image,
             IsOnline = fs.UserId1 != id ? fs.User1.IsOnline : fs.User2.IsOnline,
             CreatedAt = fs.UserId1 != id ? fs.User1.CreatedAt : fs.User2.CreatedAt,
-            latestMessage = latestMessageHolder == null ? null : new GetMessageVm
-            {
-                Id = latestMessageHolder.Id,
-                Text = latestMessageHolder.message,
-                SenderId = latestMessageHolder.SenderId,
-                CreatedAt = latestMessageHolder.CreatedAt
-            }
+            latestMessage = fs.Messages.FirstOrDefault() != null ?
+            new GetMessageVm {
+                Id = fs.Messages.FirstOrDefault().Id,
+                Text = fs.Messages.FirstOrDefault().message,
+                SenderId = fs.Messages.FirstOrDefault().SenderId,
+                CreatedAt = fs.Messages.FirstOrDefault().CreatedAt
+            } : null
         }).ToList();
 
 
