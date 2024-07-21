@@ -19,4 +19,6 @@ public class SearchFriendVm
     public string? RequestId { get; set; }
 
     public DateTime? CreatedAt { get; set; }
+
+    public bool isSent {get;set;}
 }

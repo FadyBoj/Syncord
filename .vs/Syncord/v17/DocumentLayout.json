@@ -1,10 +1,13 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\PC\\Projects\\Syncord\\",
+  "WorkspaceRootPath": "C:\\PC\\Projects\\Syncord\u002BTest\\Syncord\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4AE4AC8E-6900-4AB9-9638-DDC58F6AF6D7}|Syncord.csproj|c:\\pc\\projects\\syncord\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{4AE4AC8E-6900-4AB9-9638-DDC58F6AF6D7}|Syncord.csproj|solutionrelative:dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{F69009FC-D7F2-49A4-9083-A89EC9535760}|..\\Test\\Test.csproj|c:\\pc\\projects\\syncord\u002Btest\\test\\controller\\friendshipcontroller.test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4AE4AC8E-6900-4AB9-9638-DDC58F6AF6D7}|Syncord.csproj|c:\\pc\\projects\\syncord\u002Btest\\syncord\\controllers\\friendshipcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4AE4AC8E-6900-4AB9-9638-DDC58F6AF6D7}|Syncord.csproj|solutionrelative:controllers\\friendshipcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,23 +17,40 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FriendShipController.cs",
+              "DocumentMoniker": "C:\\PC\\Projects\\Syncord\u002BTest\\Syncord\\Controllers\\FriendShipController.cs",
+              "RelativeDocumentMoniker": "Controllers\\FriendShipController.cs",
+              "ToolTip": "C:\\PC\\Projects\\Syncord\u002BTest\\Syncord\\Controllers\\FriendShipController.cs",
+              "RelativeToolTip": "Controllers\\FriendShipController.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABkAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-18T06:42:36.638Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Dockerfile",
-              "DocumentMoniker": "C:\\PC\\Projects\\Syncord\\Dockerfile",
-              "RelativeDocumentMoniker": "Dockerfile",
-              "ToolTip": "C:\\PC\\Projects\\Syncord\\Dockerfile",
-              "RelativeToolTip": "Dockerfile",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-06-21T20:53:09.64Z",
+              "Title": "FriendShipController.Test.cs",
+              "DocumentMoniker": "C:\\PC\\Projects\\Syncord\u002BTest\\Test\\Controller\\FriendShipController.Test.cs",
+              "RelativeDocumentMoniker": "..\\Test\\Controller\\FriendShipController.Test.cs",
+              "ToolTip": "C:\\PC\\Projects\\Syncord\u002BTest\\Test\\Controller\\FriendShipController.Test.cs",
+              "RelativeToolTip": "..\\Test\\Controller\\FriendShipController.Test.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAAAAkAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-17T22:42:54.875Z",
               "EditorCaption": ""
             }
           ]

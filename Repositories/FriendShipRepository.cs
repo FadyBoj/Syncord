@@ -90,8 +90,6 @@ public class FriendShipRepository : IFriendShipRepository
             };
 
 
-
-
         var orderResult = StringComparer.OrdinalIgnoreCase.Compare(senderId, recieverId);
         var combinedIds = (orderResult < 0 ? senderId : recieverId).ToString() +
         (orderResult < 0 ? recieverId : senderId).ToString();
@@ -303,6 +301,22 @@ public class FriendShipRepository : IFriendShipRepository
 
     public async Task<List<SearchFriendVm>> Search(string searchString, string userId)
     {
+        var friends = await _context.FriendShips.Where(fs =>
+        fs.UserId1 == userId || fs.UserId2 == userId
+        ).ToListAsync();
+
+        var friendRequests = await _context.friendRequests.Where(fr =>
+        fr.SenderId == userId || fr.RecieverId == userId
+        ).ToListAsync();
+
+        var friendsIds = friends.Select(f =>
+            f.UserId1 != userId ? f.UserId1 : f.UserId2
+        ).ToList();
+
+        var friendRequestsIds = friendRequests.Select(fs =>
+            fs.SenderId != userId ? fs.SenderId : fs.RecieverId
+        );
+
         var users = await _context.Users.Where(
         u => u.Email.ToLower().StartsWith(searchString.ToLower()) && u.Id != userId
             ).Select(u => new SearchFriendVm
@@ -311,7 +325,8 @@ public class FriendShipRepository : IFriendShipRepository
                 Firstname = u.Firstname,
                 Lastname = u.Lastname,
                 Email = u.Email,
-                Image = u.Image
+                Image = u.Image,
+                isSent = (friendsIds.Contains(u.Id) || friendRequestsIds.Contains(u.Id)) ? true : false
             }).ToListAsync();
 
         return users;

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\PC\\Projects\\Syncord\\Syncord.csproj": {}
+    "C:\\PC\\Syncord\\Syncord.csproj": {}
   },
   "projects": {
-    "C:\\PC\\Projects\\Syncord\\Syncord.csproj": {
+    "C:\\PC\\Syncord\\Syncord.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\PC\\Projects\\Syncord\\Syncord.csproj",
+        "projectUniqueName": "C:\\PC\\Syncord\\Syncord.csproj",
         "projectName": "Syncord",
-        "projectPath": "C:\\PC\\Projects\\Syncord\\Syncord.csproj",
+        "projectPath": "C:\\PC\\Syncord\\Syncord.csproj",
         "packagesPath": "C:\\Users\\fadyn\\.nuget\\packages\\",
-        "outputPath": "C:\\PC\\Projects\\Syncord\\obj\\",
+        "outputPath": "C:\\PC\\Syncord\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\fadyn\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UqKh1Yaxy5DCv3/TdMhdBoysEp5O0XY3zpsEWw7djiw0NpDghsrYu12cKeb0yF1tBGsdhtzU3ehkLT8ffmxL4w==",
+  "dgSpecHash": "MJ1DaRZOlX3f8pCP4Jzvyw8IjiKxX96i0Jc1nwhGWxvfHjgPB6yv2zFpyo+3YC8uSJpltRMgxoKS0Ddite3KEA==",
   "success": true,
-  "projectFilePath": "C:\\PC\\Projects\\Syncord\\Syncord.csproj",
+  "projectFilePath": "C:\\PC\\Syncord\\Syncord.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\fadyn\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
     "C:\\Users\\fadyn\\.nuget\\packages\\cloudinarydotnet\\1.26.2\\cloudinarydotnet.1.26.2.nupkg.sha512",
