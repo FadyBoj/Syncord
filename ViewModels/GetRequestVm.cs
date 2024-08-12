@@ -11,5 +11,7 @@ public class GetRequestVm
     public string Lastname { get; set; }
     public DateTime CreatedAt { get; set; }
 
+    public bool IsSent {get;set;}
+
 
 }

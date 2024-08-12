@@ -87,6 +87,8 @@ public class UserRepository : IUserRepository
         {
             Id = fr.Id,
             Email = fr.Reciever.Email,
+            Firstname = fr.Reciever.Firstname,
+            Lastname = fr.Reciever.Lastname,
             OutGoing = true
         }).ToList();
 
@@ -94,6 +96,8 @@ public class UserRepository : IUserRepository
         {
             Id = fr.Id,
             Email = fr.Sender.Email,
+            Firstname = fr.Reciever.Firstname,
+            Lastname = fr.Reciever.Lastname,
             OutGoing = false
         }).ToList();
 
@@ -148,13 +152,14 @@ public class UserRepository : IUserRepository
             IsOnline = fs.UserId1 != id ? fs.User1.IsOnline : fs.User2.IsOnline,
             CreatedAt = fs.UserId1 != id ? fs.User1.CreatedAt : fs.User2.CreatedAt,
             latestMessage = fs.Messages.FirstOrDefault() != null ?
-            new GetMessageVm {
+            new GetMessageVm
+            {
                 Id = fs.Messages.FirstOrDefault().Id,
                 Text = fs.Messages.FirstOrDefault().message,
                 SenderId = fs.Messages.FirstOrDefault().SenderId,
                 CreatedAt = fs.Messages.FirstOrDefault().CreatedAt
             } : null
-            
+
         }).ToList();
 
         var friendsHolder = user.FriendShipsHolder.Select(fs => new FriendVm
@@ -168,7 +173,8 @@ public class UserRepository : IUserRepository
             IsOnline = fs.UserId1 != id ? fs.User1.IsOnline : fs.User2.IsOnline,
             CreatedAt = fs.UserId1 != id ? fs.User1.CreatedAt : fs.User2.CreatedAt,
             latestMessage = fs.Messages.FirstOrDefault() != null ?
-            new GetMessageVm {
+            new GetMessageVm
+            {
                 Id = fs.Messages.FirstOrDefault().Id,
                 Text = fs.Messages.FirstOrDefault().message,
                 SenderId = fs.Messages.FirstOrDefault().SenderId,

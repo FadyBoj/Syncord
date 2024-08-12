@@ -150,7 +150,8 @@ public class FriendShipRepository : IFriendShipRepository
                 Email = sender.Email,
                 Firstname = sender.Firstname,
                 Lastname = sender.Lastname,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                IsSent=true,
             },
             ReceiverRequest = new GetRequestVm
             {
@@ -161,7 +162,8 @@ public class FriendShipRepository : IFriendShipRepository
                 Email = reciever.Email,
                 Firstname = reciever.Firstname,
                 Lastname = reciever.Lastname,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                IsSent=true
             }
         };
     }
